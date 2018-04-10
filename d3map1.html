@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lan="en">
+	<head>
+		<title>D3 mapping 1</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="scatter_style.css">
+		<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+		<script type="text/javascript" src="http://d3js.org/topojson.v1.min.js"></script>
+		<script src="http://d3js.org/d3.geo.projection.v0.min.js" charset="utf-8"></script>
+		<style>
+			.d3-map{
+				background-color:white;
+				border-radius:4px;
+				border:1px solid black;
+				width:900px;
+				height:530p;
+			}
+				
+			.land {
+			  fill: #222;
+			}
+			.boundary {
+			  fill: none;
+			  stroke: #fff;
+			  stroke-width: .5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h3>D3 mapping using GeoJSON data</h3>
+			<p class="text-muted text">My home city (Corvallis, Oregon) is marked with a red dot.<p>
+			<div class="d3-map" id="d3mapcorvallis"></div>
+		</div>
+		<script  type="text/javascript">
+
+			function world_map(lat,lon,element,width,height,scale){
+				var coord = [{"lat":lat,"lon":lon}];
+
+				var width = width;
+					height = height;
+
+				var projection = d3.geo.patterson()
+					.scale(scale)
+					.translate([width /2 , height / 2])
+					.precision(.1);
+
+				var path = d3.geo.path()
+					.projection(projection);
+
+				//var graticule = d3.geo.graticule();
+
+				var svg = d3.select(element).append("svg") //#map1
+					.attr("width", width)
+					.attr("height", height);
+
+				//svg.append("path")
+				//	.datum(graticule)
+				//	.attr("class", "graticule")
+				//	.attr("d", path);
+
+				d3.json("world-50m.json", function(error, world) {
+					if (error) throw error;
+
+					//land borders
+					svg.insert("path", ".graticule")
+						  .datum(topojson.feature(world, world.objects.land))
+						  .attr("class", "land")
+						  .attr("d", path);
+					
+					//country borders
+					svg.insert("path", ".graticule")
+						  .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
+						  .attr("class", "boundary")
+						  .attr("d", path);
+					  
+				svg.selectAll("circle")
+					.data(coord)
+					.enter()
+					.append("circle")
+					.attr("cx", function (d) { return projection([d.lon, d.lat])[0]; })  //projection(d)[0];
+					.attr("cy", function (d) { return projection([d.lon, d.lat])[1]; })  //projection(d)[1]
+					.attr("r", "4px")
+					.attr("fill", "red");
+					  
+				});
+				
+				//d3.select(self.frameElement).style("height", height + "px");	
+			}
+			
+			world_map(44.5667, -123.2833, "#d3mapcorvallis",900,530,140);
+		</script>
+	</body>
+</html>

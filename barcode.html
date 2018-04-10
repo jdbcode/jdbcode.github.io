@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lan="en">
+	<head>
+		<title>Barcode 1</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="scatter_style.css">
+		<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<h3>Click the button!</h3>
+			<p class="text-muted text">The bars will randomly change heights<p>
+			<button type="button" class="btn btn-default" id="change">Change values</button>
+			<div id="plot"></div>
+		
+		</div>
+		<script  type="text/javascript">
+			//define the bar heights array
+			var heights = [];
+			
+			//fill in the scatterplot array with random-value sub-arrays 
+			for(i=0; i<10; i++){
+				var hi = Math.floor(Math.random()*100); //generate random height value
+				heights.push(hi); //add random height value to array 
+			}
+			
+			//start d3
+			//define svg width and height
+			var w = 555; //define the width of the svg plot area
+			var h = 555; //define the height of the svg plot area
+			var barpadding = 3; //define the padding between bars
+			var toppadding = 30
+			
+			var yscale = d3.scale.linear()
+				.domain([0, d3.max(heights, function(d) { return d; })])
+				.range([h, 0]);
+			
+			//append the svg element to the html body - set the svg width and height
+			var svg = d3.select("#plot")
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h);
+				
+			//create the rectangles that will go into the svg
+			var circles = svg.selectAll("rect")
+				.data(heights)
+				.enter()
+				.append("rect")	
+				.attr("x", function(d, i){
+			   		return i * (w/heights.length);
+				})
+				.attr("y", function(d) {
+			   		return h-yscale(d);
+				})
+				.attr("width", w/heights.length - barpadding)
+				.attr("height", function(d) {
+					return yscale(d);
+				})
+				.on("mouseover", function() {
+			   		d3.select(this)
+			   			.transition()
+						.duration(200)
+						.attr("fill", "#606060");
+				})
+				.on("mouseout", function(d) {
+					d3.select(this)
+						.transition()
+				   		.duration(800)
+						.attr("fill", "#000000");
+				});
+
+			   
+			//On click, update with new data			
+			d3.select("#change")
+				.on("click", function(){
+					for(i=0; i<10; i++){
+						var hi = Math.floor(Math.random()*100); //generate random height value
+						heights[i]=hi; //add random height value to array 
+					}
+					
+					//Update scale domains
+					yscale.domain([0, d3.max(heights, function(d) { return d; })]);
+					
+					//Update the rect with new data
+					svg.selectAll("rect")
+						.data(heights)					   
+						.transition()
+						.duration(800)
+						.attr("y", function(d) {
+							return h-yscale(d);
+						})
+						.attr("height", function(d) {
+							return yscale(d);
+						});
+					
+				});		
+		</script>
+	</body>
+<html>

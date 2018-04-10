@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lan="en">
+	<head>
+		<title>D3 dots 1 - jdbcode</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="scatter_style.css">
+		<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+		<style>
+.btn-primary:active, .btn-primary.active {
+    background: white;
+    box-shadow: none;
+}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h3>Using D3 to plot a series of points</h3>
+			<p class="text-muted text">The points are added to the plot with a temporal and opacity delay.<p>
+			<div class="row">
+				<div class="col-md-6">
+					
+					<div id="plot"></div>
+
+				</div>
+			</div>
+		</div>
+		<script  type="text/javascript">
+			//define the scatterplot array
+			var x = [1,2,3,4,5,6,7,8,9,10];
+			var	y = [1,2,3,4,5,6,7,8,9,10];
+			var xy = [];
+			for(i=0;i<x.length;i++){xy.push([x[i],y[i]])}
+			
+			//start d3
+			//define svg width and height
+			var w = 555; //define the width of the svg plot area
+			var h = 555; //define the height of the svg plot area
+			var padding = 40; //define the interior padding of the plot area
+
+			//define the scales
+			var xscale = d3.scale.linear()
+				.domain([0, d3.max(xy, function(d) { return d[0]; })])
+				.range([padding, w - padding]);
+			
+			var yscale = d3.scale.linear()
+				.domain([0, d3.max(xy, function(d) { return d[1]; })])
+				.range([h - padding, padding]);
+				
+			//define the axis
+			var xaxis = d3.svg.axis()
+				.scale(xscale)
+				.orient("bottom");
+			
+			var yaxis = d3.svg.axis()
+				.scale(yscale)
+				.orient("left");
+			
+			//append the svg element to the html body - set the svg width and height
+			var svg = d3.select("#plot")
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h);
+			
+			//create the circles that will go into the svg
+			var circles = svg.selectAll("circle")
+				.data(xy)
+				.enter()
+				.append("circle")
+				.transition()
+				.delay(function(d, i) { return i * 1000 })
+				.duration(5000)   
+				.style('opacity', .5);
+			
+			
+			
+			
+			
+			//define the circle attributes		
+			circles.attr("cx", function(d) {
+				return xscale(d[0]); //Returns scaled value
+				})
+				.attr("cy", function(d) {
+					return yscale(d[1]);
+				})
+				.attr("r", 15);
+
+				
+				
+			//create the axis
+			svg.append("g")
+					.attr("class", "axis")
+					.attr("transform", "translate(0," + (h - padding) + ")")
+					.call(xaxis);
+				
+			//Create Y axis
+			svg.append("g")
+					.attr("class", "axis")
+					.attr("transform", "translate(" + padding + ",0)")
+					.call(yaxis);	
+	
+				
+		</script>
+	</body>
+</html>

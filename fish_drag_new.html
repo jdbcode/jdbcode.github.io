@@ -1,0 +1,87 @@
+<!doctype html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Fish Drag</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<style>
+		#steelhead, #trout {width:500px;height:350px; border:2px solid black;border-radius: 0.5em;}
+		.drops div{display:inline-block;}
+		.fish div{display:inline-block;position:relative;height:150px;width:500px;}
+		.male img{position: absolute;}
+		.female img{position: absolute;}
+		h3{margin-left:10px;}
+    </style>
+</head>
+<body>
+	<div class = "container">
+		<!--<div class="jumbotron">-->
+			<h1>Drag us around!</h1>
+			<p>We are Omykiss smolts. During development we will commit to being either a steelhead
+			and migrate between the ocean and freshwater or a rainbow trout and remain a resident of
+			lakes and streams. Assign us to a strategy by dragging and dropping us into a category. 
+			</p>
+		<!---</div>-->
+		<div class = "fish">
+			<div class = "male">
+				<img id = "m1" src="http://www.weebly.com/uploads/2/5/4/1/25411825/mjuvomykiss2.png">
+				<img id = "m2" src="http://www.weebly.com/uploads/2/5/4/1/25411825/mjuvomykiss2.png">
+				<img id = "m3" src="http://www.weebly.com/uploads/2/5/4/1/25411825/mjuvomykiss2.png">
+				<img id = "m4" src="http://www.weebly.com/uploads/2/5/4/1/25411825/mjuvomykiss2.png">
+				<img id = "m5" src="http://www.weebly.com/uploads/2/5/4/1/25411825/mjuvomykiss2.png">
+				<img id = "m6" src="http://www.weebly.com/uploads/2/5/4/1/25411825/mjuvomykiss2.png">
+				<img id = "m7" src="http://www.weebly.com/uploads/2/5/4/1/25411825/mjuvomykiss2.png">
+				<img id = "m8" src="http://www.weebly.com/uploads/2/5/4/1/25411825/mjuvomykiss2.png">
+			</div>
+			<div class = "female">
+				<img id = "f1" src="http://www.weebly.com/uploads/2/5/4/1/25411825/fjuvomykiss2.png">
+				<img id = "f2" src="http://www.weebly.com/uploads/2/5/4/1/25411825/fjuvomykiss2.png">
+				<img id = "f3" src="http://www.weebly.com/uploads/2/5/4/1/25411825/fjuvomykiss2.png">
+				<img id = "f4" src="http://www.weebly.com/uploads/2/5/4/1/25411825/fjuvomykiss2.png">
+				<img id = "f5" src="http://www.weebly.com/uploads/2/5/4/1/25411825/fjuvomykiss2.png">
+				<img id = "f6" src="http://www.weebly.com/uploads/2/5/4/1/25411825/fjuvomykiss2.png">
+				<img id = "f7" src="http://www.weebly.com/uploads/2/5/4/1/25411825/fjuvomykiss2.png">
+				<img id = "f8" src="http://www.weebly.com/uploads/2/5/4/1/25411825/fjuvomykiss2.png">
+			</div>
+		</div>
+		<div class = "drops">
+			<div id = "steelhead"><h3>Steelhead</h3></div>
+			<div id = "trout"><h3>Rainbow trout</h3></div>
+		</div>
+		<div>
+			<p style = margin-top:10px;>Steelhead to rainbow trout ratio:<span id="str">NA</span></p>
+			<p>Steelhead male to female ratio:<span id="smf">NA</span></p>
+			<p>Rainbow trout male to female ratio:<span id="tmf">NA</span></p>
+		</div>
+	
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$(".fish img").draggable();
+			$(".drops div").droppable({
+				drop:function(event, ui){
+					var fishid = $(ui.draggable).attr("id")
+					var gender = $(ui.draggable).closest("div").attr("class");
+					var strategy = $(this).attr("id");
+					var category = strategy+gender;
+					$("#"+fishid).removeClass();
+					$("#"+fishid).addClass(category);
+					var n_shm = $(".steelheadmale").length;
+					var n_tm = $(".troutmale").length;
+					var n_shf = $(".steelheadfemale").length;
+					var n_tf = $(".troutfemale").length;
+					var str = +(((n_shm+n_shf)/(n_tm+n_tf)).toFixed(2));
+					var smf = +((n_shm/n_shf).toFixed(2));
+					var tmf = +((n_tm/n_tf).toFixed(2));
+					$("#str").html(str);
+					$("#smf").html(smf);
+					$("#tmf").html(tmf);
+				}
+			});
+		});
+		</script>
+	</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lan="en">
+	<head>
+		<title>Image Sprites - jdbcode</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<style>
+			#imagesprite{width:1140px; 
+				height:280px; 
+				background: url("example1.png") 0px 0px no-repeat;
+				border:2px solid black;
+				margin-bottom:50px;
+			}
+			#imagesprite:hover {background: url("example1.png") 0px -280px no-repeat}
+			img{
+				margin-bottom:30px;
+				border:2px solid black;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h3>Using image sprites and CSS to change display images without any lag</h3>
+			<p class="text-muted text">
+				Here is an example demonstrating the performance of a cloud and cloud shadow
+				masking algorithm. The first image shows only one portion of the full image. When you
+				scroll over the image, it will adjust its position to show the other half the of the image.
+			</p>
+			<p class="text-muted text">Move your cursor in and out of the image to alternate the mask overlay.</p>
+			<div id="imagesprite"></div>
+			<p class="text-muted text">Here is the original image:<p>
+			<img src="example1.png">
+		</div>
+
+	</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lan="en">
+	<head>
+		<title>Google Earth Plots</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<script type="text/javascript" src="https://www.google.com/jsapi"> </script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<script src="lcms_samples_geo.js"></script>
+		<script type="text/javascript">
+			var ge;
+			google.load("earth", "1", {"other_params":"sensor=true_or_false"});
+			
+			function init() {
+				google.earth.createInstance('map3d', initCB, failureCB);
+			}
+
+			function addKmlFromUrlNWL(kmlUrl) {
+				var link = ge.createLink('');
+				link.setHref(kmlUrl);
+				var networkLink = ge.createNetworkLink('');
+				networkLink.setLink(link);
+				networkLink.setFlyToView(true);
+				ge.getFeatures().appendChild(networkLink);
+			}
+			
+			
+			function addKmlFromUrlFETCH(kmlUrl) {
+				google.earth.fetchKml(ge, kmlUrl, kmlFinishedLoading);
+			}
+			
+			function kmlFinishedLoading(kmlObject) {
+				if (kmlObject) {
+				ge.getFeatures().appendChild(kmlObject);
+				console.log(kmlObject);
+				}
+			}
+			
+			function initCB(instance) {
+				ge = instance;
+				ge.getWindow().setVisibility(true);
+				ge.getTime().getControl().setVisibility(ge.VISIBILITY_SHOW);
+				ge.getTime().setHistoricalImageryEnabled(true);
+				ge.getOptions().setFlyToSpeed(ge.SPEED_TELEPORT);				
+				addKmlFromUrlNWL('http://jdbcode.com/lcms_samples_geo.kml');			
+			}
+
+			function failureCB(errorCode) {
+			}
+
+			google.setOnLoadCallback(init);
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<h3>Click on the "Next Plot" button!</h3>
+			<p class="text-muted text">
+				This is a field plot interpretation tool using the Google Earth API. The application will 
+				change to the next plot location each time the "Next Plot" button is pressed. It shows high resolution aerial and satellite imagery
+				that can provide context to plot-based field work.  Note: Google Earth API is deprecated, so the API may stop working at any 
+				time (currently working with Firefox).
+			<p>
+			<div style="border:1px solid black;height:520px; width:900px">
+				<div id="map3d" style="height:500px; width:900px"></div>
+				<div id="date" style="text-align:center;height:20px; width:900px;"></div>
+			</div>
+			<!--<div id="button" style="border:1px solid black; height:20px; width:40px; margin-top:20px">Move</div>-->
+			<button id="button" style="margin-top:20px" type="button">Next Plot</button> 
+		</div>
+		<script>
+		
+		function moveIt(element,plotInfo){ //			
+			//get the current view.
+			var lat = parseFloat(plotInfo.features[element].properties.lat);
+			var lon = parseFloat(plotInfo.features[element].properties.lng);
+			
+			var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+			var camera = ge.getView().copyAsCamera(ge.ALTITUDE_RELATIVE_TO_GROUND);
+			
+			//set new latitude and longitude values.
+			lookAt.setLatitude(lat); //36.584207
+			lookAt.setLongitude(lon); //-121.754322
+			
+			//set the altitude
+			lookAt.setRange(300.0); //default is 0.0
+			
+			//set tilt
+			lookAt.setTilt(0)
+						
+			//update the view in Google Earth.
+			ge.getView().setAbstractView(lookAt);
+			
+			$("#date").empty()
+			setTimeout(function(){
+				var endDate = getEndDate();
+				console.log(endDate);
+				$("#date").html(endDate)
+			}, 2000);
+			
+		}
+		
+		function getEndDate(){
+			var extents = ge.getTime().getControl().getExtents();
+			var begin = extents.getBegin().get();
+			var end = extents.getEnd().get();
+			return(end);
+		}
+		
+		var element = 0
+		$("body").on("click", "#button", function(){
+			moveIt(element, plotInfo);
+			element += 1
+		})
+		
+		
+		</script>
+	</body>
+</html>
+
+
+
+
+

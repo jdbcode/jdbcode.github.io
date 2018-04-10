@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Archive - jdbcode</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="cache-control" content="no-cache" />
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">  <!--bootstrap style!-->
+	<link rel="stylesheet" href="jdbcode.css">															 <!--page style!-->
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>           <!--bootstrap library!-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>            <!--jquery library!-->
+	<script type="text/javascript" src="ddpowerzoomer.js"></script>                             		 <!--image zoom function!-->
+	<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>                 		 <!--d3 library!-->
+	<script type="text/javascript" src="jdbcode.js"></script>                                            <!--page functions!-->
+ </head>
+<body>
+
+	<div class="container">
+		<div id="head-div">
+			<h1><a class="head-link" href="index.html">jdbcode</a></h1>
+			<p class="head-bar">Remote sensing, science programming, and data visualization</p>
+			<div id="head-nav" class="head-bar">
+				<p class="head-bar"><a class="head-link" href="about.html">About</a></p>
+				<p class="head-bar head-space-left"><a class="head-link" href="archive.html">Archive</a></p>
+			</div>
+			<hr>
+		</div>
+		<h4 style="margin-top:-15px">Click on the description boxes to visit the pages.</h4>
+		<!-----------project group----------->
+		<div class="exhibit-container">	
+			<div class="exhibit-holder">
+				<h3>Projects <small>/current and past projects</small></h3>
+				<div class="row">
+					<div class="col-md-3">
+						<div onclick="window.open('http://www.msscvm.jdbcode.com/')" class="thumbnail">
+							<h4>MSScvm</h4>
+							<p>An automated system to created cloud and cloud shadow masks for Landsat MSS imagery</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="window.open('http://www.landsatlinkr.jdbcode.com/')" class="thumbnail" id="landsatlinkr">
+							<h4>LandsatLinkr</h4>
+							<p>
+								An automated system for processing large volumes of Landsat imagery and building long 
+								spectrally consistent chronologies across MSS and TM/ETM+ sensors
+							</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='img_gallery.html';" class="thumbnail">
+							<h4>Image gallery</h4>
+							<p>Images of Earth taken from Landsat...ongoing</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='timeMachine/LLR-TimeMachine-v0.1.0.html';" class="thumbnail">
+							<h4>LLR-TimeMachine</h4>
+							<p>Landsat spectral chronology visualization tool derived from the <a href="http://timesync.forestry.oregonstate.edu/" target="_blank">TimeSync</a> project at Oregon State University's <a href="http://larse.forestry.oregonstate.edu/" target="_blank">Laboratory for Applications of Remote Sensing in Ecology</a></p>
+						</div>
+					</div>					
+				</div>
+			</div>
+		</div>
+		
+		<!-----------sandbox group----------->
+		<div class="exhibit-container">
+			<div class="exhibit-holder">
+				<h3>Sandbox <small>/mocked-up examples of dynamic and interactive content</small></h3>
+				<!-----------row 1----------->
+				<div class="row">
+					
+					<div class="col-md-3">
+						<div onclick="location.href='hovercraft1.html';" class="thumbnail">
+							<h4>Hovercraft 1</h4>
+							<p>Static CSS hover effects showing element expansion and color change</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='hovercraft2.html';" class="thumbnail">
+							<h4>Hovercraft 2</h4>
+							<p>Random dynamic hover effects using javascript and jquery, showing element expansion and color change</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='boxing.html'" class="thumbnail">
+							<h4>Boxing</h4>
+							<p>Boxes that scale to screen size randomly shift position when clicked. Uses javascript and jquery</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='scatter.html'" class="thumbnail">
+							<h4>Scatter</h4>
+							<p>Random scatter plot using javascript and D3</p>
+						</div>
+					</div>
+				</div>
+
+				<!-----------row 2----------->
+				<div class="row">
+					<div class="col-md-3">
+						<div onclick="location.href='barcode1.html';" class="thumbnail">
+							<h4>Barcode 1</h4>
+							<p>Bar graph using D3 and javascript</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='d3map1.html';" class="thumbnail">
+							<h4>D3 mapping 1</h4>
+							<p>D3 map using GeoJSON data showing my home town marked with a red dot</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='googlemap1.html';" class="thumbnail">
+							<h4>Google Map 1</h4>
+							<p>Google Map embedded using their API. Set to be centered on my home town of Corvallis, Oregon and use the "terrain" overlay</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='imagesprite1.html';" class="thumbnail">
+							<h4>Image sprite 1</h4>
+							<p>
+								Using image sprites and CSS to change display images without any lag: example of
+								alternating an image overlay on hover.
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<!-----------row 3----------->
+				<div class="row">
+					<div class="col-md-3">
+						<div onclick="location.href='d3dots1.html';" class="thumbnail">
+							<h4>D3 dots 1</h4>
+							<p>D3 scatter plot example with delays in data point drawing and opacity</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='d3dots2.html';" class="thumbnail">
+							<h4>D3 dots 2</h4>
+							<p>D3 scatter plot example with delays in data point drawing and opacity for three panels</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='pts1.html';" class="thumbnail">
+							<h4>Pixel time series 1</h4>
+							<p>D3 plots showing the spectral-temporal history of a Landsat pixel</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='014032_all_scenes_masked_tc_scatter_median.html';" class="thumbnail">
+							<h4>Landsat MSS time series 1</h4>
+							<p>Plotly plots showing the spectral-temporal history of Landsat MSS images</p>
+						</div>
+					</div>
+				</div>
+				
+				<!-----------row 4----------->
+				<div class="row">
+					<div class="col-md-3">
+
+					</div>
+					<div class="col-md-3">
+
+					</div>
+					<div class="col-md-3">
+
+					</div>
+					<div class="col-md-3">
+
+					</div>
+				</div>
+			</div>
+		</div>	
+		
+		<!-----------science group----------->
+		<div class="exhibit-container">	
+			<div class="exhibit-holder">
+				<h3>Science <small>/applications to convey concepts and explore data through visualization</small></h3>
+				<div class="row">
+					<div class="col-md-3">
+						<div onclick="location.href='fish_drag_new.html';" class="thumbnail">
+							<h4>Fishy</h4>
+							<p>An interative Omykiss (steelhead/rainbow trout) population demographics experiment</p>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div onclick="location.href='lcms_4530_ts_demo.html';" class="thumbnail">
+							<h4>Landsat time series</h4>
+							<p>A time-lapse video and corresponding dynamic scatter plot showing integration of Landsat MSS and TM imagery</p>
+						</div>
+					</div>
+					<!--
+					<div class="col-md-3">
+						<div onclick="location.href='google_earth_plots.html';" class="thumbnail">
+							<h4>Google Earth plots</h4>
+							<p>
+								An application to augment field-based plot work with high resolution aerial and satellite image interpretation.
+							</p>
+						</div>
+					</div>
+					-->
+					
+					<div class="col-md-3">
+						<div onclick="location.href='http://emapr.ceoas.oregonstate.edu/pages/media/conus/stem_nlcd_examples.html';" class="thumbnail">
+							<h4>Landscape Change</h4>
+							<p>
+								Time lapse videos of land cover change from 1990-2016 produced from Landsat imagery.  
+							</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='mss_eval_all_scenes_masked_tc_scatter_median.html';" class="thumbnail">
+							<h4>Landsat MSS Evaluation</h4>
+							<p>
+								Plotly plots showing the spectral-temporal history of Landsat MSS images for
+								several scenes with median lines to show offset between sensors 
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<!-----------row 2----------->
+				<div class="row">
+					<div class="col-md-3">
+						<div onclick="location.href='http://emapr.ceoas.oregonstate.edu/pages/media/webmaps/cascade_siskiyou_national_monument/cascade_siskiyou_national_monument.html';" class="thumbnail">
+							<h4>Spatiotemporal Story Telling</h4>
+							<p>
+								Interactive image time series of landscape change and accompanying side-panel description build with Leaflet.  
+							</p>
+						</div>
+					</div>				
+					<div class="col-md-3">
+						<div onclick="location.href='http://emapr.ceoas.oregonstate.edu/pages/education/how_to/sankey_diagram/sankey_diagram_to_visualize_landcover_change.html';" class="thumbnail">
+							<h4>Sankey Diagram in R</h4>
+							<p>
+								How-to guide to generating from-to Sankey Diagrams in R.   
+							</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='http://emapr.ceoas.oregonstate.edu/pages/tools/landsat_solar_elevation/landsat_solar_elevation.html';" class="thumbnail">
+							<h4>Landsat Solar Elevation</h4>
+							<p>
+								Interactive web app for determining the solar elevation at the time and day of Landsat image acquisition.   
+							</p>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div onclick="location.href='http://emapr.ceoas.oregonstate.edu/pages/tools/pdsi_time_series/pdsi_time_series.html';" class="thumbnail">
+							<h4>PDSI Time Series</h4>
+							<p>
+								Interactive web app for plotting monthly Palmer Drough Severity Index values from 1970-present for NOAA-designated climate divisions within the US.   
+							</p>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+
+	</div>
+</body>
+</html>

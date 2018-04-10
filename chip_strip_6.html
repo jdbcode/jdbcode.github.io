@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lan="en">
+	<head>
+		<title>Intra-Annual Chip Gallery</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="timesync_style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="jquery.mousewheel.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.2.0/imagesloaded.pkgd.min.js"></script>		
+		
+		<style>
+
+		</style>
+	</head>
+	<body>
+
+		<div id="chipGallerySection" style="margin:10px;">
+			<p class="header">Intra-Annual Chip Gallery</p>
+			<div id="chip-gallery" style=" height: 95vh"></div>
+		</div>
+		<div id="img-gallery"></div>
+		<input id="selectedColor" autocomplete="off" type="color" name="selectedColor" value="#ED2939" style="display:none;">
+
+		<script>
+		
+			///////////////////SEND MESSAGES TO THE ORIGIN WINDOW///////////////////	
+			$("body").on("click",".chipImg.intraAnnual",function(e){
+					var canvasIDindex = $("canvas").index(this)
+					$(".chipHolder").removeClass("selected");
+					$(".chipHolder").eq(canvasIDindex).addClass("selected");				
+					var newSyOffset = 0*255, //canvasIDindex    //calc the source x offset for that chip
+						passback = {
+							"action":"replace_chip",
+							"newSyOffset":newSyOffset, //tell the origin where to set the original offset for the chip
+							"originChipIndex":originChipIndex, //tell the origin which chip to set the original offset for (index)
+							"useThisChip":0, //canvasIDindex,//tell the origin what chip to use instead
+							"src":origData[canvasIDindex].url, //images[canvasIDindex],
+							"data":data.Values[canvasIDindex],
+							"julday":juldays[canvasIDindex]
+						};
+
+					originURL.postMessage(JSON.stringify(passback), '*'); //the 'originURL' object is just the url of the origin window saved when a messages was received from it	
+			});
+			/////////////////////////////////////////////////////////////////////////
+
+
+
+			//////////////////////////GET MESSAGES FROM ORIGIN///////////////////////////////// 
+			//global variables from js file
+			//origData
+			//n_chips
+			//data
+			//project
+			//chipDisplayProps
+			
+			//global to this html page
+			var originURL = ""; //need to save the url of the origin window - will get it once a message has been sent from it
+			var originChipIndex = 0;
+			var juldays = [];
+			//var chipDisplayProps = {};
+			//var images = []; //not used when src is not a chip strip
+			
+			//receive messages from the origin window
+			$(window).on("message onmessage",function(e){
+				var dataFromOrigin = JSON.parse(e.originalEvent.data);
+				
+				chipDisplayProps = dataFromOrigin.chipDisplayProps; //reset global
+				if(dataFromOrigin.action == "add_chips"){
+					originURL = e.originalEvent.source; //the 'e.originalEvent.source' is just the url of the origin window - save it for use later when we need to send messages to the origin window
+					
+					//unpack the message 
+					var year = dataFromOrigin.year; 
+					var julday = dataFromOrigin.julday;
+					originChipIndex = dataFromOrigin.chipIndex; //reset global
+					
+					
+					project = dataFromOrigin.project; //reset global
+					plot = dataFromOrigin.plot;	//reset global				
+					//images = dataFromOrigin.src; //need global //not used when src is not a chip strip
+					//useThisChip = dataFromOrigin.useThisChip; //not used when src is not a chip strip
+					console.log(dataFromOrigin.selectedColor);
+					$("#selectedColor").prop(dataFromOrigin.selectedColor)
+					
+					//when the document is ready do stuff
+					$(document).ready(function(){
+						$("#chip-gallery").empty(); //reset
+						$("#img-gallery").empty(); //reset
+						juldays = []; //reset
+						chipInfo = {useThisChip:[],canvasIDs:[],imgIDs:[],sxOrig:[],syOrig:[],sWidthOrig:[],sxZoom:[],syZoom:[],sWidthZoom:[],chipsInStrip:[],year:[],julday:[],src:[]}; //reset global
+			
+						var url = 'http://timesync.forestry.oregonstate.edu/_y/data/'+project+'/999999/9/'+plot+'/'+year
+						//var url = "fullDataPlot11984.json"
+						
+						$.getJSON(url).done(function(returnedData){
+							origData = returnedData; //reset global
+							n_chips = origData.length; //reset global
+							data = {"Values":[]}; //reset global
+							for(var i=0;i<n_chips;i++){
+								data.Values.push({
+									"Year":origData[i].image_year,
+									"doy":origData[i].image_julday,
+									"B1":parseInt(origData[i].b1.split("|")[12]),
+									"B2":parseInt(origData[i].b2.split("|")[12]),
+									"B3":parseInt(origData[i].b3.split("|")[12]),
+									"B4":parseInt(origData[i].b4.split("|")[12]),
+									"B5":parseInt(origData[i].b5.split("|")[12]),
+									"B7":parseInt(origData[i].b7.split("|")[12])
+								});
+								juldays.push(origData[i].image_julday); //reset global
+							}
+							data = calcIndices(data); //reset global - calculate the spectral indices
+							
+							appendSrcImg();
+							var thisIndex = [$.inArray(julday,juldays)] //figure out what date was shown in the main window so it can be highlighted							
+							appendChips("intraAnnual",thisIndex);							
+							$("#img-gallery").imagesLoaded(function(){						 
+								makeChipInfo("json", origData);
+								drawAllChips("intraAnnual");		
+							});						
+						});
+					});
+				} else if (dataFromOrigin.action == "zoom"){
+					console.log("should be runnning intraAnnual")
+					drawAllChips("intraAnnual");
+				} else if (dataFromOrigin.action == "chipSize"){
+					var selectThis = [$(".chipHolder.selected").index()]
+					$(".chipHolder").remove();
+					appendChips("intraAnnual", selectThis);
+					drawAllChips("intraAnnual");						
+				} else if(dataFromOrigin.action == "plotSize"){
+					updateChipInfo();
+					drawAllChips("intraAnnual");	
+				}
+				
+				//$("#message").append(e.originalEvent.data); //****need to use 'originalEvent' instead of 'event' since im using jquery to bind the event. the jquery event object is different from the javascript event object - originalEvent is a copied version of the original javascript event object
+			});	
+			//////////////////////////////////////////////////////////////////////////////////
+			
+
+		</script>
+		<script type="text/javascript" src="ts_v3_scripts.js"></script>
+	</body>
+</html>

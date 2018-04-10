@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<title>Hovercraft 1</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+
+<style>
+	div {
+		width: 20%;
+		height: 15vh;
+		border:3px solid black;
+		background: white; /*#1f78b4*/
+		border-top-right-radius:1em;
+		border-bottom-right-radius:1em;
+		margin-left:-20px;
+	}
+
+	#div1{transition: width 1s, background 0.2s;
+		transition-timing-function: ease;
+	}
+	#div1:hover{
+		width: 50%;
+		background:#588c7e;
+	}
+
+	#div2{transition: width 1s, background 0.2s;
+		transition-timing-function: linear;
+	}
+	#div2:hover {
+		width: 70%;
+		background:#f2e394;
+	}
+	#div3{transition: width 2s, background 0.2s;
+		transition-timing-function: ease-in;
+	}
+	#div3:hover {
+		width: 35%;
+		background:#f2ae72;
+	}
+	#div4{transition: width 2s, background 0.2s;
+		transition-timing-function: ease-in-out;
+	}
+	#div4:hover {
+		width: 80%;
+		background:#d96459;
+	}
+	#div5{transition: width 2s, background 0.2s;
+		transition-timing-function: ease-out;
+	}
+	#div5:hover {
+		width: 60%;
+		background:#8c4646;
+	}
+	.text{padding-left:20px;}
+</style>
+
+<body>
+	<h3 class="text">Drag your pointer over the bars!</h3>
+	<p class="text-muted text">Each bar will extend to a predefined length and display a set color.<p>
+	<div id="div1"></div><br>
+	<div id="div2"></div><br>
+	<div id="div3"></div><br>
+	<div id="div4"></div><br>
+	<div id="div5"></div><br>
+</body>
+</html>

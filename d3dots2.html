@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lan="en">
+	<head>
+		<title>D3 dots 2 - jdbcode</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="scatter_style.css">
+		<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+		<style>
+
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h3>Using D3 to plot a series of points in multiple panels</h3>
+			<p class="text-muted text">The points are added to the plot with a temporal and opacity delay.<p>					
+				<div id="plot1" style="display:inline-block;"></div>
+				<div id="plot2" style="display:inline-block;"></div>
+				<div id="plot3"></div>
+		</div>
+		<script  type="text/javascript">
+			//define the scatterplot array
+			var x = [1,5,7,8,10,12,15,20,34,50];
+			var	y = [1,2,3,4,5,6,7,8,9,10];
+			var xy = [];
+			for(var i=0;i<x.length;i++){
+				xy.push([x[i],y[i]]);
+			};
+
+			//start d3
+			//define svg width and height
+			var w = 300; //define the width of the svg plot area
+			var h = 300; //define the height of the svg plot area
+			var padding = 50; //define the interior padding of the plot area
+
+			//define the scales
+			var xscale = d3.scale.linear()
+				.domain([0, d3.max(xy, function(d) { return d[0]; })])
+				.range([padding, w - padding]);
+			
+			var yscale = d3.scale.linear()
+				.domain([0, d3.max(xy, function(d) { return d[1]; })])
+				.range([h - padding, padding]);
+			
+			//define the axis
+			var xaxis = d3.svg.axis()
+				.scale(xscale)
+				.orient("bottom");
+				
+			var xaxisNO = d3.svg.axis()
+				.scale(xscale)
+				.ticks(0)
+				.orient("bottom");
+			
+			var yaxis = d3.svg.axis()
+				.scale(yscale)
+				.orient("left");
+
+			var yaxisNO = d3.svg.axis()
+				.scale(yscale)
+				.ticks(0)
+				.orient("left");
+			
+				
+				
+			//append the svg element to the html body - set the svg width and height
+			var svg1 = d3.select("#plot1")
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h);
+			
+			//create the circles that will go into the svg
+			var circles1 = svg1.selectAll("circle")
+				.data(xy)
+				.enter()
+				.append("circle")
+				.transition()
+				.delay(function(d, i) { return i * 1000 })
+				.duration(5000)   
+				.style('opacity', .5);
+		
+			//define the circle attributes		
+			circles1.attr("cx", function(d){return xscale(d[0]);})
+				.attr("cy", function(d){return yscale(d[1]);})
+				.attr("r", 10);
+				
+			//append the svg element to the html body - set the svg width and height
+			var svg2 = d3.select("#plot2")
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h);
+			
+			//create the circles that will go into the svg
+			var circles2= svg2.selectAll("circle")
+				.data(xy)
+				.enter()
+				.append("circle")
+				.transition()
+				.delay(function(d, i) { return i * 1000 })
+				.duration(5000)   
+				.style('opacity', .5);
+		
+			//define the circle attributes		
+			circles2.attr("cx", function(d){return xscale(d[0]);})
+				.attr("cy", function(d){return yscale(d[1]);})
+				.attr("r", 10);
+				
+			//append the svg element to the html body - set the svg width and height
+			var svg3 = d3.select("#plot3")
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h);
+			
+			//create the circles that will go into the svg
+			var circles3= svg3.selectAll("circle")
+				.data(xy)
+				.enter()
+				.append("circle")
+				.transition()
+				.delay(function(d, i) { return i * 1000 })
+				.duration(5000)   
+				.style('opacity', .5);
+		
+			//define the circle attributes		
+			circles3.attr("cx", function(d){return xscale(d[0]);})
+				.attr("cy", function(d){return yscale(d[1]);})
+				.attr("r", 10);
+
+			//create the axis
+			svg1.append("g")
+					.attr("class", "axis")
+					.attr("transform", "translate(0," + (h - padding) + ")")
+					.call(xaxisNO);
+				
+			//Create Y axis
+			svg1.append("g")
+					.attr("class", "axis")
+					.attr("transform", "translate(" + padding + ",0)")
+					.call(yaxis);	
+			
+			//create the axis
+			svg2.append("g")
+					.attr("class", "axis")
+					.attr("transform", "translate(0," + (h - padding) + ")")
+					.call(xaxis);
+				
+			//Create Y axis
+			svg2.append("g")
+					.attr("class", "axis")
+					.attr("transform", "translate(" + padding + ",0)")
+					.call(yaxisNO);	
+	
+			//create the axis
+			svg3.append("g")
+					.attr("class", "axis")
+					.attr("transform", "translate(0," + (h - padding) + ")")
+					.call(xaxis);
+				
+			//Create Y axis
+			svg3.append("g")
+					.attr("class", "axis")
+					.attr("transform", "translate(" + padding + ",0)")
+					.call(yaxis);
+			
+			//text label for the x axis
+			svg3.append("text")      
+				.attr("x", 150 )
+				.attr("y", 290 )
+				.style("text-anchor", "middle")
+				.text("TC Brightness");
+			
+			//text label for the x axis			
+			svg3.append("text")
+				.attr("transform", "rotate(-90)")
+				.attr("y", 13)
+				.attr("x", -150)
+				.style("text-anchor", "middle")
+				.text("TC Greenness");
+
+					
+		</script>
+	</body>
+</html>

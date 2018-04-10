@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lan="en">
+	<head>
+		<title>Google Map 1 - jdbcode</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<script src="http://maps.googleapis.com/maps/api/js"></script>
+		<style>
+			.google-map{
+				width:900px;
+				height:530px;
+				border-radius:4px;
+				border:1px solid black;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h3>Google Map API</h3>
+			<p class="text-muted text">Check out my home city - Corvallis, Oregon!.<p>
+			<div class="google-map" id="googlemapcorvallis"></div>
+		</div>
+		<script  type="text/javascript">
+
+			function initialize(lat,lon,element,zoom) {
+				var mapProp = {
+					center:new google.maps.LatLng(lat,lon), //47.4715437,-123.8498118
+					zoom:zoom,
+					mapTypeId:google.maps.MapTypeId.TERRAIN
+				};
+				var map=new google.maps.Map(document.getElementById(element),mapProp); //"googleMap"
+			}
+		
+			google.maps.event.addDomListener(window, 'load', initialize(44.5667, -123.2833, "googlemapcorvallis",12));
+
+			//world_map(44.5667, -123.2833, "#d3mapcorvallis",900,530,140);
+		</script>
+	</body>
+</html>

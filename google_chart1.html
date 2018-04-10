@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Scatter</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Age', 'Weight'],
+          [ 8,      12],
+          [ 4,      5.5],
+          [ 11,     14],
+          [ 4,      5],
+          [ 3,      3.5],
+          [ 6.5,    7]
+        ]);
+
+        var options = {
+          title: 'Age vs. Weight comparison',
+          hAxis: {title: 'Age', minValue: 0, maxValue: 15, gridlines:{color:"transparent"}},
+          vAxis: {title: 'Weight', minValue: 0, maxValue: 15, gridlines:{color:"transparent"}},
+          legend: 'none'
+        };
+        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <style>.text{padding-left:20px;}</style>
+</head>
+<body>
+	<div class="container">
+		<h3 class="text">Scatterplot of ...</h3>
+		<p class="text-muted text">Notice how ...</p>
+		<div id="chart_div" style="width: 900px; height: 500px;"></div>
+	</div>
+</body>
+
+</html>

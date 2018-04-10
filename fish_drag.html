@@ -1,0 +1,55 @@
+<!doctype html>
+<head>
+	<meta charset="utf-8">
+	<title>Fish Drag</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<style>
+		.steelmale{display:none;}
+		.steelfemale{display:none;}
+		.troutmale{display:none;}
+		.troutfemale{display:none;}
+		.steelhead, .trout {width:500px;height:500px; border:1px solid black;}
+		.drops div{display:inline-block;}
+		
+    </style>
+</head>
+<body>
+	<h1>Drag us around!</h1>
+	<div class = "fish">
+		<img class = "male" src="http://www.weebly.com/uploads/2/5/4/1/25411825/mjuvomykiss2.png">
+		<img class = "female" src="http://www.weebly.com/uploads/2/5/4/1/25411825/fjuvomykiss2.png">
+	</div>
+	<div class = "drops">
+		<div class = "steelhead"><h3>steelhead</h3></div>
+		<div class = "trout"><h3>rainbow trout</h3></div>
+	</div>
+	<script>
+	$(document).ready(function(){
+		var malesteal = 0
+		var femalesteal = 0
+		var maletrout = 0
+		var femaletrout = 0
+		$("div img").draggable();
+		$(".drops div").droppable({
+			drop:function(event, ui){
+				var male = ui.draggable.hasClass("male");
+				var steelhead = $(this).hasClass("steelhead");
+				var oldclass = 
+				if(male === true && steelhead === true){var newdiv = "<div class='steelmale'/>"};
+				if(male === true && steelhead === false){var newdiv = "<div class='troutmale'/>"};
+				if(male === false && steelhead === true){var newdiv = "<div class='steelfemale'/>"};
+				if(male === false && steelhead === false){var newdiv = "<div class='troutfemale'/>"};
+				$("body").append( newdiv ); /*"<div class='steelmale'/>"*/
+				var n = $(".steelmale").length;
+				alert(newdiv);
+			}
+		});
+			
+		
+	});
+	</script>
+</body>
+</html>

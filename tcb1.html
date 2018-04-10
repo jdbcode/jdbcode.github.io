@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Landsat #2</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">  <!--bootstrap style!-->
+	<link rel="stylesheet" href="jdbcode.css">															 <!--page style!-->
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>           <!--bootstrap library!-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>            <!--jquery library!-->
+	<script type="text/javascript" src="ddpowerzoomer.js"></script>                             		 <!--image zoom function!-->
+	<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>                 		 <!--d3 library!-->
+	<script type="text/javascript" src="jdbcode.js"></script>                                          <!--page functions!-->
+	<script type="text/javascript" src="http://d3js.org/topojson.v1.min.js"></script>
+	<script src="http://d3js.org/d3.geo.projection.v0.min.js" charset="utf-8"></script>
+	<script src="http://maps.googleapis.com/maps/api/js"></script>
+ </head>
+<body>
+	<div class="container">
+		<h2>Forest harvest, Olympic Peninsula, WA, USA</h2>
+		<p>This image is from an interesting area on the Olympic Peninsula (WA) that shows variation in 
+		forest management practices in private, state, Forest Service, and National Park Service land.
+		It is a compressed example of the change occurring between three time periods (1984, 1998, 2012), 
+		as represented by write function memory insertion. It renders land that has changed from one period to the 
+		next with color, and areas that have not, with grayscale. Tan colors represent forest recovery over the entire 28-year period 
+		(disturbed prior to 1984), shades of blue/green are disturbances that have occurred more recently, and purplish 
+		colors indicate older disturbances that happened between the mid-eighties and early nineties. Take note of the 
+		differences in disturbance shape, size, continuity, and location over the landscape, and through time, as 
+		indicated by the color.</p>
+		<p>*Hover over the image to activate a zoom window to see more detail.</p>
+		
+		<div class="map-holder">
+			<img id="tcb1_orig" class="img-gallery-orig" src="img_gallery/tcb1_orig.jpg">
+			<div>
+				<div class="img-context d3-map" id="d3map1"></div>
+				<div class="img-context pull-right google-map" id="googlemap1"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			world_map(47.4741244,-123.6334083, "#d3map1",547.5,300,85);
+			google.maps.event.addDomListener(window, 'load', initialize(47.4741244,-123.6334083,"googlemap1",10));
+		</script>
+	</div>
+</body>
+</html>

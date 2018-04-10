@@ -1,0 +1,139 @@
+<html>
+	<head>
+
+		<script src="http://mbostock.github.com/d3/d3.v2.js"></script>
+				<style>
+
+	<style>
+		.axis path, 
+		.axis line {
+			fill: none;
+			stroke: black;
+			shape-rendering: crispEdges;
+		}
+
+		.axis text {
+			display:none;
+			/*font-family: sans-serif;*/
+			/*font-size: 11px;*/
+		}		
+		
+		.plot-background{background-color:white;  /* #F5F5F5 */
+			margin:10px;
+			border-radius:4px;
+			cursor:pointer;
+			border: 1px solid #CCC;
+		}
+
+	</style>
+	</head>
+	<body>
+
+
+<script>
+function scatter(){
+		
+	var scatter = [];
+	for(i=0; i<10; i++){
+		var x = Math.floor(Math.random()*100);
+		var y = Math.floor(Math.random()*100);
+		scatter.push([x,y]);
+	}
+		
+	var margin = {top: 10, right: 20, bottom: 25, left: 33};
+
+	var width = 356 - margin.left - margin.right,
+		height = 200 - margin.top - margin.bottom;
+
+	//define the scales
+	var xscale = d3.scale.linear()
+		.domain([-9,109])
+		.range([margin.left, width]);
+	
+	var yscale = d3.scale.linear()
+		.domain([-9,109])
+		.range([height, margin.top]);
+		
+	//define the axis
+	var xaxis = d3.svg.axis()
+		.scale(xscale)
+		.ticks(0)
+		.orient("bottom");
+	
+	var yaxis = d3.svg.axis()
+		.scale(yscale)
+		.ticks(0)
+		.orient("left");
+	
+	//append the svg element to the html body - set the svg width and height
+	var svg = d3.select("body")
+		.append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.attr("class", "plot-background");
+	
+	//create the circles that will go into the svg
+	var circles = svg.selectAll("circle")
+		.data(scatter)
+		.enter()
+		.append("circle")
+		.attr("class","plot1circles");
+	
+	//define the circle attributes		
+	circles.attr("cx", function(d){return xscale(d[0]);})
+		.attr("cy", function(d){return yscale(d[1]);})
+		.attr("r", 9);
+		
+	//create the x axis
+	svg.append("g")
+		.attr("class", "axis")
+		.attr("transform", "translate(0," + (height) + ")")
+		.call(xaxis);
+		
+	//Create the y axis
+	svg.append("g")
+		.attr("class", "axis")
+		.attr("transform", "translate("+margin.left+",0)")
+		.call(yaxis);	
+
+	//On click, update with new data			
+	d3.select("body")
+		.on("click", function(){
+			for(i=0; i<10; i++){				
+				var x = Math.floor(Math.random()*100);
+				var y = Math.floor(Math.random()*100);
+				scatter[i][0] = x;
+				scatter[i][1] = y;
+			}
+			
+			//Update the circles with new data
+			svg.selectAll("circle")
+				.data(scatter)					   
+				.transition()
+				.duration(1000)
+				.attr("cx", function(d) {return xscale(d[0]);})
+				.attr("cy", function(d) {return yscale(d[1]);})
+			
+			//Update X axis
+			svg.select(".x.axis")
+				.transition()
+				.duration(1000)
+				.call(xaxis);
+			
+			//Update y axis
+			svg.select(".y.axis")
+				.transition()
+				.duration(1000)
+				.call(yaxis);
+				
+	});	
+};
+
+scatter();
+  
+  
+	</script>
+
+	</body>
+</html>
+

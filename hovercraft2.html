@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Hovercraft 2</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+	div {
+		width: 20%;
+		height: 15vh;
+		border:3px solid black;
+		background: "white";
+		border-top-right-radius:1em;
+		border-bottom-right-radius:1em;
+		margin-left:-20px;
+	}
+	.text{padding-left:20px;}
+</style>
+
+<body>
+	<h3 class="text">Drag your pointer over the bars!</h3>
+	<p class="text-muted text">Each bar will extend to a random length and display a randomly selected color from a pre-defined palette.<p>
+	<div id="div1"></div><br>
+	<div id="div2"></div><br>
+	<div id="div3"></div><br>
+	<div id="div4"></div><br>
+	<div id="div5"></div><br>
+
+	<script type="text/javascript">
+		function rand(items){
+			return items[~~(Math.random() * items.length)];
+		}
+
+		var colors = ["#588c7e", "#f2e394", "#f2ae72", "#d96459", "#8c4646"];
+
+		$(document).ready(function () {
+			$("div").hover(
+			function () {
+				var w = 0;
+				while (w < 15) {
+					w = Math.floor(Math.random() * 100);
+				}
+				$(this).animate({
+					width: w + "%",
+					backgroundColor:rand(colors)
+				},"slow");
+			},
+			function () {
+				$(this).animate({
+					width: "15%",
+					backgroundColor:"white"
+				});
+			});
+		});
+	</script>
+</body>
+</html>

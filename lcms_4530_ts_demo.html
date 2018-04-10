@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lan="en">
+	<head>
+		<title>4530 Time Series</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> <!--needed so that D3 will work in IE!-->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="timesync_style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="specIndexStretch.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.2.0/imagesloaded.pkgd.min.js"></script>
+		
+		<script src="lcms_4530_ts_demo.js" charset="utf-8"></script>
+		
+		<style>
+		#title{
+			position:absolute;
+			top: 7px;
+			left: 20px;
+			width: 1000px;
+			height: 60px;
+		}
+		#text{
+			position:absolute;
+			top: 750px;
+			left: 20px;
+			width: 1000px;
+			height: 60px;
+		}
+		#imgGallery{
+			display:none;
+		}
+		#timeLapse{
+			position:absolute;
+			top: 60px;
+			left: 20px;
+			width: 590px;
+			height: 660px;
+			border-radius:4px;
+		}
+		.attribute{
+			display:inline-block;
+		}
+		/*#attributeHolder{
+			position:absolute;
+			top: 50px;
+			left: 900px;
+			width: 150px;
+			height: 200px;
+			border:1px solid grey;
+			border-radius:4px;
+		}*/
+		.axis path,
+		.axis line {
+			fill: none;
+			stroke: black;
+			shape-rendering: crispEdges;
+		}
+		
+		.attSubHolder{
+			display:inline-block;
+			margin-left:30px;
+		}
+		
+		.plot{
+			width: 740px;
+			height: 217px;
+			margin-bottom: 3px;
+		}
+		#plotHolder{
+			position:absolute;
+			top: 60px;
+			left: 620px;
+			width: 760px;
+			height: 900px;
+
+		}
+		.vline{				
+			stroke: #e9e9e9;
+			shape-rendering: crispEdges;
+		}
+		</style>
+	</head>
+	<body>
+			<h3 id="title">
+				Please wait for the page to fully load before starting the time-lapse video.
+				It can take a few minutes - there are lots of images!
+			</h3>
+			
+			<div id="timeLapse" class="sectionDiv" style="border:1px solid grey">
+				<!-- <p class="header" style="margin:5px 5px 5px 5px">Time-Lapse</p> -->
+
+				<div id="tlHolder" style="margin:0px 1px 0px 2px;">
+				<canvas id="tlCanvas" width=582 height=591 style="margin-left:1px"></canvas>   <!-- width=800 height=800  width=776.4 height=788.4--> 
+				</div>
+							<div id="attributeHolder">
+				<div class="attSubHolder">
+					<p class="attribute bold">WRS:</p>
+					<p id="wrs" class="attribute bold">test</p>
+				</div>
+				<div class="attSubHolder">
+					<p class="attribute bold">Path/Row:</p>
+					<p id="pr" class="attribute bold">test</p>
+				</div>
+				<div class="attSubHolder">
+					<p class="attribute bold">Sensor:</p>
+					<p id="sensor" class="attribute bold">test</p>
+				</div>
+				<div class="attSubHolder">
+					<p class="attribute bold">Year:</p>
+					<p id="year" class="attribute bold">test</p>
+				</div>
+				<div class="attSubHolder">
+					<p class="attribute bold">doy:</p>
+					<p id="doy" class="attribute bold">test</p>
+				</div>
+			</div>
+ 				<div class="text-center">
+					<div class="btn-group btn-group-xs" role="group" aria-label="...">
+					  <button id="tlPlay" type="button" class="btn btn-default tlBtn"><span class="glyphicon glyphicon-play"></span></button>			
+					  <button id="tlBack" type="button" class="btn btn-default tlBtn"><span class="glyphicon glyphicon-step-backward"></span></button>
+					  <button id="tlForward" type="button" class="btn btn-default tlBtn"><span class="glyphicon glyphicon-step-forward"></span></button>
+<!-- 					  <button id="tlBackx2" type="button" class="btn btn-default tlBtn"><span class="glyphicon glyphicon-fast-backward"></span></button>
+					  <button id="tlForwardx2" type="button" class="btn btn-default tlBtn"><span class="glyphicon glyphicon-fast-forward"></span></button>
+					  <button id="flicker" type="button" class="btn btn-default tlBtn"><span class="glyphicon glyphicon-adjust"></span></button> -->
+					  <button id="slower" type="button" class="btn btn-default tlBtn"><span class="glyphicon glyphicon-minus-sign"></span></button>
+					  <button id="faster" type="button" class="btn btn-default tlBtn"><span class="glyphicon glyphicon-plus-sign"></span></button>
+					</div>
+				</div>
+			</div>
+	
+	<div id="plotHolder">
+		<svg class="plot" id="svgtcb"></svg>  <!-- width="740" height="250" -->
+		<svg class="plot" id="svgtcg"></svg>  <!-- width="740" height="250" -->
+		<svg class="plot" id="svgtcw"></svg>  <!-- width="740" height="250" -->
+	</div>
+	<p id="text">
+				This video and scatter plot set show nearly all Landsat MSS and TM images for the area intersecting WRS2 path 45, row 30 for
+				years 1972-1995.
+				The video loops through all images in chronological order and is tied to three scatter plots representing the median image
+				value for spectral indices: tasseled cap brightness, greenness, and wetness (TCB, TCG, TCW).
+				The image and point colors are displayed as TCB = red, TCG = green, TCW = blue, with a standardized stretch. 
+				Note the similar color range across the entire time series (variation due to season, cloud cover, and proportion of area-of-interest). It is notable because MSS and TM are not equivalent data.
+				The MSS data here have been modeled to match the characteristics of TM data using a framework similar to
+				<a href="http://landsatlinkr.jdbcode.com/">LandsatLinkr</a>. This spectral harmonization allows the entire 43+ year Landsat
+				image archive to be included in a consistent time series analysis to study historical Earth surface change.				
+			</p>
+	<div id="imgGallery"></div>
+	
+	<script>
+			var n_chips = imageInfo.filePath.length;
+			var lastIndex = n_chips-1; //reset global
+			var timeLapseIndex = 0;
+			var tlCanvasID = document.getElementById("tlCanvas");
+			var tlctx = tlCanvasID.getContext("2d"); //global
+			var canvasWidth = 582//776.4
+			var canvasHeight = 591//788.4
+			
+			function appendSrcImg(){
+				for(var i=0;i<n_chips;i++){
+					$("#imgGallery").append('<img class="chipImgSrc" src='+imageInfo.filePath[i]+'>')
+				}
+			}
+			
+			tlctx.mozImageSmoothingEnabled = false;
+			tlctx.msImageSmoothingEnabled = false;
+			tlctx.imageSmoothingEnabled = false;
+			function tlInt(){
+				var tlImgID = $(".chipImgSrc").eq(timeLapseIndex)[0]				
+				var	height = tlImgID.naturalHeight; 
+				var width = tlImgID.naturalWidth;
+
+				tlctx.drawImage(
+					tlImgID,
+					0,
+					0,
+					width,
+					height,
+					0,0,canvasWidth,canvasHeight
+				);
+				
+				//tlctx.strokeStyle=chipDisplayProps.plotColor; //"#FF0000"
+				//tlctx.lineWidth=1;
+				//tlctx.lineCap = 'square';
+				//tlctx.strokeRect(117.5-(chipDisplayProps.boxZoom/2), 117.5-(chipDisplayProps.boxZoom/2), chipDisplayProps.boxZoom, chipDisplayProps.boxZoom);
+				$("#wrs").text(imageInfo.wrs[timeLapseIndex]);
+				$("#pr").text(imageInfo.pr[timeLapseIndex]);
+				$("#sensor").text(imageInfo.sensor[timeLapseIndex]);
+				$("#year").text(imageInfo.year[timeLapseIndex]);
+				$("#doy").text(imageInfo.doy[timeLapseIndex]);
+			}
+			
+			
+			function tlPlay(){
+				var tlImgID = $(".chipImgSrc").eq(timeLapseIndex)[0]
+				var	height = tlImgID.naturalHeight; 
+				var width = tlImgID.naturalWidth;
+				tlctx.drawImage(
+					tlImgID,
+					0,
+					0,
+					width,
+					height,
+					0,0,canvasWidth,canvasHeight
+				);
+				//tlctx.strokeStyle=chipDisplayProps.plotColor; //"#FF0000"
+				//tlctx.lineWidth=1;
+				//tlctx.lineCap = 'square';
+				tlctx.beginPath();
+				tlctx.lineWidth="5";
+				tlctx.strokeStyle="#AEF071"; // Green path
+				tlctx.moveTo(217,0);
+				tlctx.lineTo(canvasWidth,187);
+				tlctx.lineTo(360,canvasHeight);
+				tlctx.lineTo(0,400);
+				tlctx.lineTo(217,0);
+				tlctx.stroke(); // Draw it
+				//tlctx.strokeRect(117.5-(chipDisplayProps.boxZoom/2), 117.5-(chipDisplayProps.boxZoom/2), chipDisplayProps.boxZoom, chipDisplayProps.boxZoom);
+				//console.log(imageInfo.year[timeLapseIndex]);
+				$("#wrs").text(imageInfo.wrs[timeLapseIndex]);
+				$("#pr").text(imageInfo.pr[timeLapseIndex]);
+				$("#sensor").text(imageInfo.sensor[timeLapseIndex]);
+				$("#year").text(imageInfo.year[timeLapseIndex]);
+				$("#doy").text(imageInfo.doy[timeLapseIndex]);
+				$("circle").attr("r",3)
+				$(".tcbdata").eq(timeLapseIndex).attr("r",10)
+				$(".tcgdata").eq(timeLapseIndex).attr("r",10)
+				$(".tcwdata").eq(timeLapseIndex).attr("r",10)
+				if(timeLapseIndex < lastIndex){timeLapseIndex += 1} else {timeLapseIndex = 0}			 			
+			}
+			
+			flickerDir = "forward"; //"forward";
+			function tlFlicker(){
+				var tlImgID = $(".chipImgSrc").eq(timeLapseIndex)[0]
+				var	height = tlImgID.naturalHeight; 
+				var width = tlImgID.naturalWidth;
+				tlctx.drawImage(
+					tlImgID,
+					0,
+					0,
+					width,
+					height,
+					0,0,canvasWidth,canvasHeight
+				);
+				//tlctx.strokeStyle=chipDisplayProps.plotColor; //"#FF0000"
+				//tlctx.lineWidth=1;
+				//tlctx.lineCap = 'square';
+				//tlctx.strokeRect(117.5-(chipDisplayProps.boxZoom/2), 117.5-(chipDisplayProps.boxZoom/2), chipDisplayProps.boxZoom, chipDisplayProps.boxZoom);
+				
+				tlctx.beginPath();
+				tlctx.lineWidth="5";
+				tlctx.strokeStyle="#AEF071"; // Green path
+				tlctx.moveTo(217,0);
+				tlctx.lineTo(canvasWidth,187);
+				tlctx.lineTo(360,canvasHeight);
+				tlctx.lineTo(0,400);
+				tlctx.lineTo(217,0);
+				tlctx.stroke(); // Draw it
+				
+				$("#wrs").text(imageInfo.wrs[timeLapseIndex]);
+				$("#pr").text(imageInfo.pr[timeLapseIndex]);
+				$("#sensor").text(imageInfo.sensor[timeLapseIndex]);
+				$("#year").text(imageInfo.year[timeLapseIndex]);
+				$("#doy").text(imageInfo.doy[timeLapseIndex]);
+				$("circle").attr("r",3)
+				$(".tcbdata").eq(timeLapseIndex).attr("r",10)
+				$(".tcgdata").eq(timeLapseIndex).attr("r",10)
+				$(".tcwdata").eq(timeLapseIndex).attr("r",10)
+				
+				
+				if(flickerDir == "forward"){
+					timeLapseIndex -= 1;
+					flickerDir = "back";
+				} else{
+					timeLapseIndex += 1;
+					flickerDir = "forward";
+				}
+				if(timeLapseIndex > lastIndex){timeLapseIndex = 0}
+				if(timeLapseIndex < 0){timeLapseIndex = lastIndex}
+			}
+			
+
+			var vidCntl = {"isVidPlaying":0,"dontPlayVid":0,"isFlickerOn":0,"dontFlicker":0,"speed":300}
+			$(".tlBtn").click(function(){
+				var thisID = $(this).attr("id");
+				var wasVidPlaying = vidCntl.isVidPlaying;
+				var wasFlickerOn = vidCntl.isFlickerOn;
+				
+				if(vidCntl.isVidPlaying == 1){
+					clearInterval(playTL);
+					$("#tlPlay span").attr("class","glyphicon glyphicon-play")
+					vidCntl.isVidPlaying = 0;
+					vidCntl.dontPlayVid = 1;
+				}
+				if(vidCntl.isFlickerOn == 1){
+					clearInterval(flickerTL);
+					$("#tlPlay span").attr("class","glyphicon glyphicon-play")
+					vidCntl.isFlickerOn = 0;
+					vidCntl.dontFlicker = 1;
+					flickerDir = "forward";
+				}
+				
+				
+				if(thisID == "tlBackx2"){
+					timeLapseIndex += -2;
+					timeLapseIndex = (timeLapseIndex < 0) ? 0:timeLapseIndex
+					drawTLimage();
+					$("#tlDate").text(imageInfo.year[timeLapseIndex]);
+					drawTLimage();
+				} else if(thisID == "tlBack" && timeLapseIndex > 0){
+					timeLapseIndex += -1;
+					drawTLimage();
+					$("#tlDate").text(imageInfo.year[timeLapseIndex]);
+					drawTLimage();					
+				} else if(thisID == "tlPlay" && vidCntl.dontPlayVid == 0){
+					playTL = setInterval(tlPlay, vidCntl.speed);
+					vidCntl.isVidPlaying = 1
+					$("#tlPlay span").attr("class","glyphicon glyphicon-pause")		
+				} else if(thisID == "tlForward" && timeLapseIndex < lastIndex){
+					timeLapseIndex += 1;
+					drawTLimage();
+					$("#tlDate").text(imageInfo.year[timeLapseIndex]);
+					drawTLimage();
+				} else if(thisID == "tlForwardx2"){
+					timeLapseIndex += 2;
+					timeLapseIndex = (timeLapseIndex > lastIndex) ? (lastIndex):timeLapseIndex
+					$("#tlDate").text(imageInfo.year[timeLapseIndex]);
+					drawTLimage();
+				} else if(thisID == "flicker" && vidCntl.dontFlicker == 0){
+					flickerTL = setInterval(tlFlicker, vidCntl.speed);
+					vidCntl.isFlickerOn = 1					
+				} else if(thisID == "faster"){
+					vidCntl.speed = (vidCntl.speed > 100) ? vidCntl.speed-50:vidCntl.speed //50 is the lowest speed
+					if(wasVidPlaying == 1){
+						playTL = setInterval(tlPlay, vidCntl.speed);
+						$("#tlPlay span").attr("class","glyphicon glyphicon-pause")
+						vidCntl.isVidPlaying = 1
+					}
+					if(wasFlickerOn == 1){
+						flickerTL = setInterval(tlFlicker, vidCntl.speed);
+						vidCntl.isFlickerOn = 1
+					}
+				} else if(thisID == "slower"){
+					vidCntl.speed = (vidCntl.speed < 850) ? vidCntl.speed+50:vidCntl.speed //900 is the lowest speed
+					if(wasVidPlaying == 1){
+						playTL = setInterval(tlPlay, vidCntl.speed);
+						$("#tlPlay span").attr("class","glyphicon glyphicon-pause")
+						vidCntl.isVidPlaying = 1
+					}
+					if(wasFlickerOn == 1){
+						flickerTL = setInterval(tlFlicker, vidCntl.speed);
+						vidCntl.isFlickerOn = 1
+					}
+				}
+
+				vidCntl.dontPlayVid = 0;
+				vidCntl.dontFlicker = 0;
+				
+				//$("#tlDate").text(imageInfo.year[timeLapseIndex]);
+			})
+			
+			function drawTLimage(){
+				var tlImgID = $(".chipImgSrc").eq(timeLapseIndex)[0]
+				var	height = tlImgID.naturalHeight; 
+				var width = tlImgID.naturalWidth;
+				tlctx.drawImage(
+					tlImgID,
+					0,
+					0,
+					width,
+					height,
+					0,0,canvasWidth,canvasHeight
+				);
+				//tlctx.strokeStyle=chipDisplayProps.plotColor; //"#FF0000"
+				//tlctx.lineWidth=1;
+				//tlctx.lineCap = 'square';
+				//tlctx.strokeRect(117.5-(chipDisplayProps.boxZoom/2), 117.5-(chipDisplayProps.boxZoom/2), chipDisplayProps.boxZoom, chipDisplayProps.boxZoom);
+				
+				tlctx.beginPath();
+				tlctx.lineWidth="5";
+				tlctx.strokeStyle="#AEF071"; // Green path
+				tlctx.moveTo(217,0);
+				tlctx.lineTo(canvasWidth,187);
+				tlctx.lineTo(360,canvasHeight);
+				tlctx.lineTo(0,400);
+				tlctx.lineTo(217,0);
+				tlctx.stroke(); // Draw it
+				
+				
+				
+				
+				$("#wrs").text(imageInfo.wrs[timeLapseIndex]);
+				$("#pr").text(imageInfo.pr[timeLapseIndex]);
+				$("#sensor").text(imageInfo.sensor[timeLapseIndex]);
+				$("#year").text(imageInfo.year[timeLapseIndex]);
+				$("#doy").text(imageInfo.doy[timeLapseIndex]);
+				$("circle").attr("r",3)
+				$(".tcbdata").eq(timeLapseIndex).attr("r",10)
+				$(".tcgdata").eq(timeLapseIndex).attr("r",10)
+				$(".tcwdata").eq(timeLapseIndex).attr("r",10)
+			}
+			
+			var year = [1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995]
+			
+			
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+			function setcolor(imageInfo, specIndex, stretch, n_stdev, len) {
+				var minv = stretch[specIndex].mean - (stretch[specIndex].stdev * n_stdev),
+					maxv = stretch[specIndex].mean + (stretch[specIndex].stdev * n_stdev),
+					color = [];
+					if(specIndex == "TCB"){specIndex = "tcb"}
+					if(specIndex == "TCG"){specIndex = "tcg"}
+					if(specIndex == "TCW"){specIndex = "tcw"}
+				for (var i=0; i < len; i++) {
+
+					if (imageInfo[specIndex][i] < minv) imageInfo[specIndex][i] = minv;
+					if (imageInfo[specIndex][i] > maxv) imageInfo[specIndex][i] = maxv;
+					color[i] = ((imageInfo[specIndex][i] - minv) / (maxv - minv)) * 256;
+				}
+				return color;
+			}
+			
+			//define function to return scaled color arrays as RGB color
+			function scaledRGB(data, RspecIndex, GspecIndex, BspecIndex, stretch, n_stdev, len){
+				var colorR = setcolor(data, "TCB", stretch, n_stdev, len),
+					colorG = setcolor(data, "TCG", stretch, n_stdev, len),
+					colorB = setcolor(data, "TCW", stretch, n_stdev, len),
+					color = [];
+				for(var i=0;i<len;i++) {color[i] = d3.rgb(colorR[i],colorG[i],colorB[i]);}
+				return color;
+			}
+			//console.log(stretch)
+			rgbColor = scaledRGB(imageInfo, "junk", "junk", "junk", stretch, 2, imageInfo.filePath.length); //reset global - ca
+			
+
+			
+			//define function to initialize the spectral trajectory
+			function plotIntTCB(){
+			
+				var yearmin = d3.min(year),
+					yearmax = d3.max(year);
+				
+				//adjust the ranges so there is some buffer
+				var xmin = yearmin//-1, //
+				var	xmax = yearmax+1;
+
+				//define the width of the svg plot area
+				var w = 740;// 
+				var	h = 217; 
+				
+				//define the plot margins
+				var pt = 10, //plot top
+					pr = 15, //plot right
+					pl = 65, //plot left
+					pb = 28; //plot bottom 37
+												
+				//define the x scale
+				var xscale = d3.scale.linear() //NEEDS TO BE A GLOBAL VARIABLE - IS USED HERE AND IN THE UPDATE FUNCTION
+					.domain([xmin, xmax])
+					.range([pl, w - pr]);
+				
+				//define the y scale
+				var yscale = d3.scale.linear() //NEEDS TO BE A GLOBAL VARIABLE - IS USED HERE AND IN THE UPDATE FUNCTION
+					//.domain([domain["TCB"].min, domain["TCB"].max])
+					.domain([500, 5500])
+					.range([h - pb, pt]);
+					
+				//define the x axis
+				var xaxis = d3.svg.axis()
+					.scale(xscale)
+					.orient("bottom")
+					.tickFormat(d3.format("d"));
+				
+				//define the x axis
+				var yaxis = d3.svg.axis() //NEEDS TO BE A GLOBAL VARIABLE - IS USED HERE AND IN THE UPDATE FUNCTION
+					.scale(yscale)
+					.orient("left");
+				
+				var svg = d3.select("#svgtcb"); 
+				
+				var vline = svg.selectAll(".vline")
+					.data(year)
+					.enter()
+					.append("line")
+					.attr("x1", function(d){return xscale(d)})
+					.attr("x2", function(d){return xscale(d)})
+					.attr("y1", function(d){return yscale(500)})
+					.attr("y2", function(d){return yscale(5500)})
+					.attr("class","vline")
+				
+				
+				var circles = svg.selectAll(".tcbdata")
+					.data(imageInfo.tcb)
+					.enter()
+					.append("circle")
+					.style("fill",function(d,i){return rgbColor[i];})
+					.attr("cx", function(d, i){return xscale(decDate[i]);})
+					.attr("cy", function(d){return yscale(d);})
+					.attr("r", 3)
+					.attr("class","tcbdata");
+				
+				
+				//draw the x axis
+				svg.append("g")
+					.attr("class", "x axis")
+					.attr("transform", "translate(0," + (h - pb) + ")")
+					.call(xaxis);
+					
+				//draw the y axis
+				svg.append("g")
+					.attr("class", "y axis")
+					.attr("transform", "translate(" + pl + ",0)")
+					.call(yaxis);
+					
+				//add label for the x axis
+				svg.append("text")      
+					.attr("transform", "rotate(-90)")
+					.attr("x", (h-pb)/-2)
+					.attr("y", 10)
+					.style("text-anchor", "middle")
+					.text("TC Brightness") //"TC Wetness"
+					.attr("id","specPlotIndex");
+			}
+			
+			function plotIntTCG(){
+			
+				var yearmin = d3.min(year),
+					yearmax = d3.max(year);
+				
+				//adjust the ranges so there is some buffer
+				var xmin = yearmin//-1, //
+				var	xmax = yearmax+1;
+
+				//define the width of the svg plot area
+				var w = 740;// 
+				var	h = 217; 
+				
+				//define the plot margins
+				var pt = 10, //plot top
+					pr = 15, //plot right
+					pl = 65, //plot left
+					pb = 28; //plot bottom 37
+												
+				//define the x scale
+				var xscale = d3.scale.linear() //NEEDS TO BE A GLOBAL VARIABLE - IS USED HERE AND IN THE UPDATE FUNCTION
+					.domain([xmin, xmax])					
+					.range([pl, w - pr]);
+				
+				//define the y scale
+				var yscale = d3.scale.linear() //NEEDS TO BE A GLOBAL VARIABLE - IS USED HERE AND IN THE UPDATE FUNCTION
+					//.domain([domain["TCG"].min, domain["TCG"].max])
+					.domain([-200, 1200])
+					.range([h - pb, pt]);
+					
+				//define the x axis
+				var xaxis = d3.svg.axis()
+					.scale(xscale)
+					.orient("bottom")
+					.tickFormat(d3.format("d"));
+				
+				//define the x axis
+				var yaxis = d3.svg.axis() //NEEDS TO BE A GLOBAL VARIABLE - IS USED HERE AND IN THE UPDATE FUNCTION
+					.scale(yscale)
+					.orient("left");
+				
+				var svg = d3.select("#svgtcg"); 
+				
+				
+				
+				var vline = svg.selectAll(".vline")
+					.data(year)
+					.enter()
+					.append("line")
+					.attr("x1", function(d){return xscale(d)})
+					.attr("x2", function(d){return xscale(d)})
+					.attr("y1", function(d){return yscale(-200)})
+					.attr("y2", function(d){return yscale(1200)})
+					.attr("class","vline")
+				
+				var circles = svg.selectAll(".tcgdata")
+					.data(imageInfo.tcg)
+					.enter()
+					.append("circle")
+					.style("fill",function(d,i){return rgbColor[i];})
+					.attr("cx", function(d, i){return xscale(decDate[i]);})
+					.attr("cy", function(d){return yscale(d);})
+					.attr("r", 3)
+					.attr("class","tcgdata");
+				
+				
+				//draw the x axis
+				svg.append("g")
+					.attr("class", "x axis")
+					.attr("transform", "translate(0," + (h - pb) + ")")
+					.call(xaxis);
+					
+				//draw the y axis
+				svg.append("g")
+					.attr("class", "y axis")
+					.attr("transform", "translate(" + pl + ",0)")
+					.call(yaxis);
+					
+				//add label for the x axis
+				svg.append("text")      
+					.attr("transform", "rotate(-90)")
+					.attr("x", (h-pb)/-2)
+					.attr("y", 10)
+					.style("text-anchor", "middle")
+					.text("TC Greenness") //"TC Wetness"
+					.attr("id","specPlotIndex");
+			}
+			
+			
+			function plotIntTCW(){
+			
+				var yearmin = d3.min(year),
+					yearmax = d3.max(year);
+				
+				//adjust the ranges so there is some buffer
+				var xmin = yearmin//-1, //
+					xmax = yearmax+1;
+
+				//define the width of the svg plot area
+				var w = 740;// 
+				var	h = 217; 
+				
+				//define the plot margins
+				var pt = 10, //plot top
+					pr = 15, //plot right
+					pl = 65, //plot left
+					pb = 28; //plot bottom 37
+												
+				//define the x scale
+				var xscale = d3.scale.linear() //NEEDS TO BE A GLOBAL VARIABLE - IS USED HERE AND IN THE UPDATE FUNCTION
+					.domain([xmin, xmax])
+					.range([pl, w - pr]);
+				
+				//define the y scale
+				var yscale = d3.scale.linear() //NEEDS TO BE A GLOBAL VARIABLE - IS USED HERE AND IN THE UPDATE FUNCTION
+					//.domain([domain["TCW"].min, domain["TCW"].max])
+					.domain([-1700, 1000])
+					.range([h - pb, pt]);
+					
+				//define the x axis
+				var xaxis = d3.svg.axis()
+					.scale(xscale)
+					.orient("bottom")
+					.tickFormat(d3.format("d"));
+				
+				//define the x axis
+				var yaxis = d3.svg.axis() //NEEDS TO BE A GLOBAL VARIABLE - IS USED HERE AND IN THE UPDATE FUNCTION
+					.scale(yscale)
+					.orient("left");
+				
+				var svg = d3.select("#svgtcw"); 
+				
+				var vline = svg.selectAll(".vline")
+					.data(year)
+					.enter()
+					.append("line")
+					.attr("x1", function(d){return xscale(d)})
+					.attr("x2", function(d){return xscale(d)})
+					.attr("y1", function(d){return yscale(-1700)})
+					.attr("y2", function(d){return yscale(1000)})
+					.attr("class","vline")
+				
+				var circles = svg.selectAll(".tcwdata")
+					.data(imageInfo.tcw)
+					.enter()
+					.append("circle")
+					.style("fill",function(d,i){return rgbColor[i];})
+					.attr("cx", function(d, i){return xscale(decDate[i]);})
+					.attr("cy", function(d){return yscale(d);})
+					.attr("r", 3)
+					.attr("class","tcwdata");
+				
+				
+				//draw the x axis
+				svg.append("g")
+					.attr("class", "x axis")
+					.attr("transform", "translate(0," + (h - pb) + ")")
+					.call(xaxis);
+					
+				//draw the y axis
+				svg.append("g")
+					.attr("class", "y axis")
+					.attr("transform", "translate(" + pl + ",0)")
+					.call(yaxis);
+					
+				//add label for the x axis
+				svg.append("text")      
+					.attr("transform", "rotate(-90)")
+					.attr("x", (h-pb)/-2)
+					.attr("y", 10)
+					.style("text-anchor", "middle")
+					.text("TC Wetness") //"TC Wetness"
+					.attr("id","specPlotIndex");
+			}
+			
+			
+			
+			
+			
+			
+			function leapYear(year){
+				return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+			}
+			
+			var decDate = [];
+			function calcDecDate(){
+				for(var i=0;i<imageInfo.filePath.length;i++){
+					
+					var thisYear = parseInt(imageInfo.year[i]);
+					if(leapYear(thisYear)){
+						var n_days = 367
+					} else{
+						var n_days = 366
+					}
+					var decDatetemp = thisYear + (imageInfo.doy[i]/n_days);
+					decDate.push(decDatetemp);
+				}
+			}
+			
+			
+
+			//imageInfo = calcDecDate(imageInfo);
+			calcDecDate();
+
+			
+				
+			
+			
+			appendSrcImg()
+			//$(document).onload(function(){
+				$("#imGallery").imagesLoaded(function(){
+					tlInt()
+					//plotInt()
+					plotIntTCB()
+					plotIntTCG()
+					plotIntTCW()
+				});
+			//});
+			
+	</script>
+	
+	</body>
+</html>
