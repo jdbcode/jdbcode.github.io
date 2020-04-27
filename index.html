@@ -1,95 +1,82 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="en">
 <head>
-	<title>JDB</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="cache-control" content="no-cache" />
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="/favicon.ico" type="image/x-icon">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">  <!--bootstrap style!-->
-	<link rel="stylesheet" href="jdbcode.css">															 <!--page style!-->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>           <!--bootstrap library!-->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>            <!--jquery library!-->
-	<script type="text/javascript" src="ddpowerzoomer.js"></script>                             		 <!--image zoom function!-->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.0.0/d3.min.js"></script>                 		 <!--d3 library!-->
-	<script type="text/javascript" src="jdbcode.js"></script>                                            <!--page functions!-->
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<style>
+		body: background-color: '000'
+	</style>
 </head>
-<body>
-	<div class="container">
-		<div id="head-div">
-			<h1 style="font-family: 'Roboto', sans-serif;"><a class="head-link" href="index.html">Justin Braaten</a></h1>
-			<p class="head-bar">Remote sensing, data visualization, and research programming</p>
-			<div id="head-nav" class="head-bar">
-				<p class="head-bar"><a class="head-link" href="about.html">About</a></p>
-				<p class="head-bar head-space-left"><a class="head-link" href="portfolio/portfolio.html" target="_blank">Archive</a></p>
+	<body>
+		<div id="main" class="w3-content" style="max-width:1000px; background-color: #fff">
+		<!-- Header -->
+		<header class="w3-panel w3-center w3-opacity" style="padding:50px 16px">
+			<h1>Justin Braaten</h1>
+			<h3>Data science and technical writing</h3>
+			<p>Advancing the study of Earth through remote sensing application development and education</p>
+
+			<div class="w3-container w3-center">
+				<a href="https://github.com/jdbcode" target="" title="GitHub"><i class="fa fa-github w3-hover-opacity w3-padding"></i></a>
+				<a href="https://gis.stackexchange.com/users/68792/justin-braaten?tab=profile" target="_blank" title="Stack Exchange"><i class="fa fa-stack-exchange w3-hover-opacity w3-padding"></i></a>
+				<a href="https://twitter.com/jstnbraaten" target="_blank" title="Twitter"><i class="fa fa-twitter w3-hover-opacity w3-padding"></i></a>
+				<a href="https://scholar.google.com/citations?hl=en&user=XUd83uMAAAAJ" target="_blank" title="Google Scholar"><i class="fa fa-graduation-cap w3-hover-opacity w3-padding"></i></a>
 			</div>
-			<hr style="margin-bottom:10px">
+			
+			
+			
+			<!--<div class="w3-padding-32">
+				<div class="w3-bar w3-border">
+					<a href="#" class="w3-bar-item w3-button w3-small">Home</a>
+					<a href="#" class="w3-bar-item w3-button w3-small w3-light-grey">Portfolio</a>
+					<a href="#" class="w3-bar-item w3-button w3-small">Contact</a>
+				</div>-->
+			</div>
+		</header>
 		</div>
-
-		<div class="bottom-space">
-			<p style="text-align:right">Click, scroll, and hover on page elements!</p>	
-			<img id="brtnss-change-banner" class="img-responsive" src="brtnss_change_banner.jpg" alt="TC Brightness change">
-		</div>
-		<div>
-			<pre id="homepage-pre" class="bottom-space">
-mss_dark_object_finder = function(file){
- 
-  if(length(grep("radiance", file) == 1)){
-    info = get_metadata(file)
-    brightthresh = round(100*((info$b1gain*120)+info$b1bias))
-  } else {brightthresh = 120}
-
-  b1 = as.matrix(raster(file, 1))
-  goodpix = which(is.na(b1) == F & b1 <= brightthresh)
-  samp = matrix(nrow=100000,ncol=30)
-  for(k in 1:length(samp[1,])){samp[,k] = sample(length(goodpix), 100000)}
-  
-  pngout = paste(substr(file,1,nchar(file)-4),"_drkobjv.png", sep="")
-  if(file.exists(pngout) == T){unlink(pngout)}
-  png(pngout,width=700, height=700)
-  par(mfrow=c(2,2))
-  
-  thresh = c(5,5,5,5)
-  drkobjall = array(dim=4)
-  for(b in 1:4){
-    dn = as.matrix(raster(file, band=b))
-    dnsamp = dn[goodpix]
-    drkobj = array(dim=length(samp[1,]))
-    for(g in 1:length(samp[1,])){
-      r = dnsamp[samp[,g]]
-      count = table(r)
-      count1 = c(count[2:length(count)],0)
-      shift = (count1-count)
-      valu = as.numeric(rownames(shift))
-      goods = which(shift >= thresh[b])
-      drkobj[g] = valu[goods[1]]
-    }
-    
-    finaldrkobj = round(mean(drkobj))
-
-    hist(dn, breaks=256, ylim=c(0,20000),
-         main=paste("Band",b,"dark object value =", finaldrkobj), col="black", xlab="DN")
-    abline(v = finaldrkobj, col = "red")  #, xlim=c(0,255)
-  
-    drkobjall[b] = finaldrkobj
-  }    
-  dev.off()  
-  return(drkobjall)
-}		
-			</pre>
-		</div>
-		<div class="plot-holder", style="margin-bottom:15px;">  <!--background-color:#808080!-->
-			<div id="plot1"></div>
-			<div id="plot2"></div>
-			<div id="plot3"></div>
-		</div>
-	</div>
-	<script  type="text/javascript">		
-		scatter();
-		bar();
-		line();
-	</script>
-</body>
+		<script src="projects.js"></script>
+		<script>
+			var col1 = []
+			var col2 = []
+			var col3 = []
+			var thisRow = 0
+			var thisCol = 0
+			var rowId = ''
+			var rowDiv;
+			projects.forEach(function(e){
+				console.log(e)
+				var insert = 
+					'<div class="w3-third">' +
+						'<div class="w3-card">' +
+							'<a href="'+e.url+'" target="_blank">' +
+								'<img src="'+e.img+'" class="w3-hover-opacity" style="width:100%">' +
+							'</a>' +
+						'</div>' +
+					'</div>'
+				
+				if(thisCol == 0) {
+					rowId = 'row'+thisRow.toString();
+					rowDiv = $('<div id="'+rowId+'" class="w3-row-padding w3-margin-bottom"></div>');
+					$("#main").append(rowDiv);
+					rowDiv.append(insert)
+					thisCol = 1
+				} else if(thisCol == 1) {
+					rowDiv.append(insert);
+					thisCol = 2
+				} else {
+					rowDiv.append(insert);
+					thisCol = 0
+					thisRow++
+				}
+			});
+			
+		</script>
+	</body>
 </html>
