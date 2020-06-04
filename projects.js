@@ -1,4 +1,16 @@
 var projects = [
+	{
+    title: '',
+		descr: '',
+		img: 'images/047.png',
+		url: 'https://showcase.earthengine.app/view/jrc-global-surface-water-animation'
+  },
+	{
+    title: '',
+		descr: '',
+		img: 'images/046.png',
+		url: 'https://medium.com/google-earth/visualizing-changing-landscapes-with-google-earth-engine-b2d502dc02a8'
+  },
   {
     title: '',
 		descr: '',
