@@ -1,5 +1,65 @@
 var projects = [
 	{
+		title: '',
+		descr: '',
+		img: 'images/057.png',
+		url: 'https://developers.google.com/earth-engine/tutorials/community/sentinel-2-s2cloudless'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/056.png',
+		url: 'https://jstnbraaten.medium.com/a-proposed-end-to-alaskas-roadless-rule-2791c1e04dbf'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/055.png',
+		url: 'https://jstnbraaten.medium.com/goes-in-earth-engine-53fbc8783c16'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/054.png',
+		url: 'https://jstnbraaten.medium.com/running-google-earth-engine-from-rstudio-cloud-3faba86af8a5'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/053.png',
+		url: 'https://medium.com/google-earth/python-powers-up-the-rise-of-the-python-api-for-earth-engine-056741eb1b75'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/052.png',
+		url: 'https://medium.com/google-earth/more-accurate-and-flexible-cloud-masking-for-sentinel-2-images-766897a9ba5f'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/051.png',
+		url: 'https://jstnbraaten.users.earthengine.app/view/landsat-timeseries-explorer#run=true;lon=-122.41952243277306;lat=45.03809894832236;from=06-10;to=09-20;index=NBR;rgb=SWIR1%2FNIR%2FGREEN;chipwidth=2;'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/050.png',
+		url: 'https://medium.com/google-earth/charts-as-easy-as-what-where-print-f36b3f9bce89'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/049.png',
+		url: 'https://medium.com/google-earth/map-tiles-comin-in-hot-61019f48c105'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/048.png',
+		url: 'https://medium.com/google-earth/farewell-to-landsat-collection-1-7117f2e9eb95'
+	},
+	{
     title: '',
 		descr: '',
 		img: 'images/047.png',
@@ -15,7 +75,7 @@ var projects = [
     title: '',
 		descr: '',
 		img: 'images/045.png',
-		url: 'https://jstnbraaten.shinyapps.io/snazzy-ee-ts-gif/'
+		url: 'https://jdbcode.github.io/Snazzy-EE-TS-GIF/'
   },
 	{
     title: '',
@@ -131,14 +191,14 @@ var projects = [
 		title: '',
 		descr: 'Land cover attribute data visualization and download web application.',
 		img: 'images/026.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/data/vis/index.html'
+		url: 'https://emapr.ceoas.oregonstate.edu/pages/data/viz/index.html'
 	},
-  {
-		title: '',
-		descr: 'A tutorial on spatially segmenting an image based on biomass distribution for a watershed in Oregon Cascades using Python\'s scikit-image library.',
-		img: 'images/028.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/education/how_to/image_segmentation/how_to_spatial_segmentation.html'
-	},
+//   {
+// 		title: '',
+// 		descr: 'A tutorial on spatially segmenting an image based on biomass distribution for a watershed in Oregon Cascades using Python\'s scikit-image library.',
+// 		img: 'images/028.png',
+// 		url: 'http://emapr.ceoas.oregonstate.edu/pages/education/how_to/image_segmentation/how_to_spatial_segmentation.html'
+// 	},
   {
 		title: '',
 		descr: 'A Leaflet application that contains many random subsets of predicted land cover time series videos for CONUS 1984-2017.',
@@ -175,30 +235,30 @@ var projects = [
 		img: 'images/015.png',
 		url: 'http://jdbcode.github.io/L1G-2-L1T/'
 	},
-  {
-		title: '',
-		descr: 'An interactive map that shows geolocated photos for field sites visited in Mount Rainier National Park. Having the georeferenced photos helps interpret the two satellite image base layers.',
-		img: 'images/006.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/media/webmaps/mora_field_trip_2017/'
-	},
-  {
-		title: '',
-		descr: 'A tutorial on creating a tile mapping service data set from your own raster data using GDAL.',
-		img: 'images/027.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/education/how_to/how_to_tws.html'
-	},
-  {
-		title: '',
-		descr: 'A data download portal for forest disturbance data in Washington, Oregon, and California. This application uses PHP to capture client-side data selection options and initiate server-side Python scripts to process the data request.',
-		img: 'images/025.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/data/download/index.html'
-	},
-  {
-		title: '',
-		descr: 'An interactive web map showing vegetation change in the Western Carpathians based on Landsat satellite imagery. Leaflet was used as the web mapping API and jQuery was used for updating image transparency upon slider position change.',
-		img: 'images/033.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/media/webmaps/carpathians/western_carpathians_60m_ex1.html'
-	},
+//   {
+// 		title: '',
+// 		descr: 'An interactive map that shows geolocated photos for field sites visited in Mount Rainier National Park. Having the georeferenced photos helps interpret the two satellite image base layers.',
+// 		img: 'images/006.png',
+// 		url: 'http://emapr.ceoas.oregonstate.edu/pages/media/webmaps/mora_field_trip_2017/'
+// 	},
+//   {
+// 		title: '',
+// 		descr: 'A tutorial on creating a tile mapping service data set from your own raster data using GDAL.',
+// 		img: 'images/027.png',
+// 		url: 'http://emapr.ceoas.oregonstate.edu/pages/education/how_to/how_to_tws.html'
+// 	},
+//   {
+// 		title: '',
+// 		descr: 'A data download portal for forest disturbance data in Washington, Oregon, and California. This application uses PHP to capture client-side data selection options and initiate server-side Python scripts to process the data request.',
+// 		img: 'images/025.png',
+// 		url: 'http://emapr.ceoas.oregonstate.edu/pages/data/download/index.html'
+// 	},
+//   {
+// 		title: '',
+// 		descr: 'An interactive web map showing vegetation change in the Western Carpathians based on Landsat satellite imagery. Leaflet was used as the web mapping API and jQuery was used for updating image transparency upon slider position change.',
+// 		img: 'images/033.png',
+// 		url: 'http://emapr.ceoas.oregonstate.edu/pages/media/webmaps/carpathians/western_carpathians_60m_ex1.html'
+// 	},
   {
 		title: '',
 		descr: 'A fishy application for interactively calculating sex ratios. The application uses jQuery to track objects and update calculations upon interaction.',
@@ -217,18 +277,18 @@ var projects = [
 		img: 'images/016.png',
 		url: 'http://jdbcode.github.io/LandsatLinkr/'
 	},
-  {
-		title: '',
-		descr: 'A time-lapse video of urban expansion in Las Vegas based on a 34-year time series of Landsat imagery. Leaflet was used as the web mapping platform.',
-		img: 'images/036.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/media/webmaps/las_vegas_urban_development/las_vegas_urban_development.html'
-	},
-  {
-		title: '',
-		descr: 'An interactive web mapping application showing a time-lapse video of landscape change, based on Landsat imagery, for a national monument in Oregon. The web mapping platform is Leaflet and it takes advantage of a side panel plugin to convey information about the region.',
-		img: 'images/034.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/media/webmaps/cascade_siskiyou_national_monument/cascade_siskiyou_national_monument.html'
-	},
+//   {
+// 		title: '',
+// 		descr: 'A time-lapse video of urban expansion in Las Vegas based on a 34-year time series of Landsat imagery. Leaflet was used as the web mapping platform.',
+// 		img: 'images/036.png',
+// 		url: 'http://emapr.ceoas.oregonstate.edu/pages/media/webmaps/las_vegas_urban_development/las_vegas_urban_development.html'
+// 	},
+//   {
+// 		title: '',
+// 		descr: 'An interactive web mapping application showing a time-lapse video of landscape change, based on Landsat imagery, for a national monument in Oregon. The web mapping platform is Leaflet and it takes advantage of a side panel plugin to convey information about the region.',
+// 		img: 'images/034.png',
+// 		url: 'http://emapr.ceoas.oregonstate.edu/pages/media/webmaps/cascade_siskiyou_national_monument/cascade_siskiyou_national_monument.html'
+// 	},
   {
 		title: '',
 		descr: 'A data visualization showing a time series of Landsat satellite images temporally linked to three spectral transformation plots showing the median value for the image. This page uses D3.js for plotting and jQuery to coordinate the plot and video frames.',
@@ -253,72 +313,72 @@ var projects = [
 		img: 'images/018.png',
 		url: 'https://jdbcode.github.io/MSScvm/'
 	},
-  {
-		title: '',
-		descr: 'A data visualization showing a series of videos that demonstrate land cover change for a sample of regions throughout the United States.',
-		img: 'images/031.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/media/conus/stem_nlcd_examples.html'
-	},
-  /*{
-		title: '',
-		descr: 'A personal site for my wonderful wife. It includes vanilla JavaScript to produce a parallax scrolling effect, modals, and a Leaflet location map.',
-		img: 'images/ohms_site.jpg',
-		url: 'https://haleyohms.github.io/'
-	},*/
-  {
-		title: '',
-		descr: 'An application that plots Palmer Drought Severity Index time series for regions within the United States. The web map is built with Leaflet and the plotting is handled with Plotly.js.',
-		img: 'images/038.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/tools/pdsi_time_series/pdsi_time_series.html'
-	},
-  {
-		title: '',
-		descr: 'An instruction guide for creating Sankey diagrams showing from-to change for classified land cover maps using R and a D3 integration library.',
-		img: 'images/029.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/education/how_to/sankey_diagram/sankey_diagram_to_visualize_landcover_change.html'
-	},
-  {
-		title: '',
-		descr: 'An application to determine the sun angle at the time of Landsat image acquisition for any day and location on Earth. The web map platform is Leaflet and the plotting is handled with the Chart.js API.',
-		img: 'images/038.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/tools/landsat_solar_elevation/landsat_solar_elevation.html'
-	},
-  {
+  	// {
+	// 	title: '',
+	// 	descr: 'A data visualization showing a series of videos that demonstrate land cover change for a sample of regions throughout the United States.',
+	// 	img: 'images/031.png',
+	// 	url: 'http://emapr.ceoas.oregonstate.edu/pages/media/conus/stem_nlcd_examples.html'
+	// },
+  	// {
+	// 	title: '',
+	// 	descr: 'A personal site for my wonderful wife. It includes vanilla JavaScript to produce a parallax scrolling effect, modals, and a Leaflet location map.',
+	// 	img: 'images/ohms_site.jpg',
+	// 	url: 'https://haleyohms.github.io/'
+	// },
+  	// {
+	// 	title: '',
+	// 	descr: 'An application that plots Palmer Drought Severity Index time series for regions within the United States. The web map is built with Leaflet and the plotting is handled with Plotly.js.',
+	// 	img: 'images/038.png',
+	// 	url: 'http://emapr.ceoas.oregonstate.edu/pages/tools/pdsi_time_series/pdsi_time_series.html'
+	// },
+  	// {
+	// 	title: '',
+	// 	descr: 'An instruction guide for creating Sankey diagrams showing from-to change for classified land cover maps using R and a D3 integration library.',
+	// 	img: 'images/029.png',
+	// 	url: 'http://emapr.ceoas.oregonstate.edu/pages/education/how_to/sankey_diagram/sankey_diagram_to_visualize_landcover_change.html'
+	// },
+  	// {
+	// 	title: '',
+	// 	descr: 'An application to determine the sun angle at the time of Landsat image acquisition for any day and location on Earth. The web map platform is Leaflet and the plotting is handled with the Chart.js API.',
+	// 	img: 'images/038.png',
+	// 	url: 'http://emapr.ceoas.oregonstate.edu/pages/tools/landsat_solar_elevation/landsat_solar_elevation.html'
+	// },
+  	{
 		title: '',
 		descr: 'A Landsat image time series exploration tool. The application includes a pixel time series profile and image subsets for pixel context. The time series plot was built with D3.js and the image chips are HTML canvas elements. It also includes a time-lapse video of the image chips and a Google Map for added spatial context.',
 		img: 'images/043.png',
 		url: 'http://jdbcode.github.io/LandsatLinkr/timeMachine/LLR-TimeMachine-v0.1.1.html'
 	},
-  {
-		title: '',
-		descr: 'An interactive web map showing pre- and post-fire Landsat satellite images for the 2017 West Mims fire near the border of Florida and Georgia. The application includes a custom side panel with options to toggle image display, adjust transparency, and flicker the images to show fire effects.',
-		img: 'images/035.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/media/webmaps/georgia_west_mims_fire/georgia_west_mims_fire.html'
-	},
-  {
-		title: '',
-		descr: 'A tool for evaluating the effect of parameter change for a Landsat change detection algorithm. This application uses Leaflet for the web map platform and Chart.js for the plotting.',
-		img: 'images/039.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/tools/lt_eval/lt_eval.html'
-	},
-  {
-		title: '',
-		descr: 'A visualization showing a time-lapse video of spectral change recorded by Landsat satellite sensors from 1990-2016.',
-		img: 'images/030.png',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/media/conus/conus_tc_rgb_1984_2016.html'
-	},
-	/*{
-		title: '',
-		descr: 'A visual demonstration of a satellite image cloud and cloud shadow identification algorithm I developed. It uses CSS to change the position of an image sprite on hover. This method is much quicker than loading a replacement image, which allows for a seamless transition - a better user experience.',
-		img: 'images/msscvm_examples.jpg',
-		url: 'https://jdbcode.github.io/MSScvm/examples.html'
-	},*/
-	/*{
-		title: '',
-		descr: 'A description page (under construction) for a Landsat-based change detection algorithm. This page uses a scroll position tracking JS library to animate the entry and exit of elements.',
-		img: 'images/landtrendr_descript.jpg',
-		url: 'http://emapr.ceoas.oregonstate.edu/pages/tools/landtrendr/landtrendr.html'
-	}*/
+//   {
+// 		title: '',
+// 		descr: 'An interactive web map showing pre- and post-fire Landsat satellite images for the 2017 West Mims fire near the border of Florida and Georgia. The application includes a custom side panel with options to toggle image display, adjust transparency, and flicker the images to show fire effects.',
+// 		img: 'images/035.png',
+// 		url: 'http://emapr.ceoas.oregonstate.edu/pages/media/webmaps/georgia_west_mims_fire/georgia_west_mims_fire.html'
+// 	 },
+//   {
+// 		title: '',
+// 		descr: 'A tool for evaluating the effect of parameter change for a Landsat change detection algorithm. This application uses Leaflet for the web map platform and Chart.js for the plotting.',
+// 		img: 'images/039.png',
+// 		url: 'http://emapr.ceoas.oregonstate.edu/pages/tools/lt_eval/lt_eval.html'
+// 	 },
+//   {
+// 		title: '',
+// 		descr: 'A visualization showing a time-lapse video of spectral change recorded by Landsat satellite sensors from 1990-2016.',
+// 		img: 'images/030.png',
+// 		url: 'http://emapr.ceoas.oregonstate.edu/pages/media/conus/conus_tc_rgb_1984_2016.html'
+// 	},
+	// {
+	// 	title: '',
+	// 	descr: 'A visual demonstration of a satellite image cloud and cloud shadow identification algorithm I developed. It uses CSS to change the position of an image sprite on hover. This method is much quicker than loading a replacement image, which allows for a seamless transition - a better user experience.',
+	// 	img: 'images/msscvm_examples.jpg',
+	// 	url: 'https://jdbcode.github.io/MSScvm/examples.html'
+	// },
+	// {
+	// 	title: '',
+	// 	descr: 'A description page (under construction) for a Landsat-based change detection algorithm. This page uses a scroll position tracking JS library to animate the entry and exit of elements.',
+	// 	img: 'images/landtrendr_descript.jpg',
+	// 	url: 'http://emapr.ceoas.oregonstate.edu/pages/tools/landtrendr/landtrendr.html'
+	// }
 ]
 
 
