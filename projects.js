@@ -1,4 +1,63 @@
 var projects = [
+
+	{
+		title: '',
+		descr: '',
+		img: 'images/058.png',
+		url: 'https://developers.google.com/earth-engine/guides/featureview_overview'
+	},
+
+
+	{
+		title: '',
+		descr: '',
+		img: 'images/064.png',
+		url: 'https://youtu.be/XT1x5YlsWP4?si=NyJwjPpWueSYmthn'
+	},
+
+	{
+		title: '',
+		descr: '',
+		img: 'images/061.png',
+		url: 'https://developers.google.com/earth-engine/tutorials'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/067.png',
+		url: 'https://youtu.be/s8OaQRyclrM?si=usg9t2ANOE54r7Dw'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/053.png',
+		url: 'https://medium.com/google-earth/python-powers-up-the-rise-of-the-python-api-for-earth-engine-056741eb1b75'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/060.png',
+		url: 'https://developers.google.com/earth-engine/guides/image_objects'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/062.png',
+		url: 'https://x.com/search?q=(%23EarthEngine)%20(from%3Ajstnbraaten)%20-filter%3Areplies&src=typed_query&f=live'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/059.png',
+		url: 'https://developers.google.com/earth-engine/guides/charts_image_collection'
+	},
+
+	{
+		title: '',
+		descr: '',
+		img: 'images/066.png',
+		url: 'https://youtu.be/lqX81saiNbA?si=HoaiIyCui9gatzrs'
+	},
 	{
 		title: '',
 		descr: '',
@@ -14,6 +73,12 @@ var projects = [
 	{
 		title: '',
 		descr: '',
+		img: 'images/063.png',
+		url: 'https://youtu.be/DAb8Yn_t1q4?si=OPybSOIprZi_v2wT'
+	},
+	{
+		title: '',
+		descr: '',
 		img: 'images/055.png',
 		url: 'https://jstnbraaten.medium.com/goes-in-earth-engine-53fbc8783c16'
 	},
@@ -23,11 +88,12 @@ var projects = [
 		img: 'images/054.png',
 		url: 'https://jstnbraaten.medium.com/running-google-earth-engine-from-rstudio-cloud-3faba86af8a5'
 	},
+
 	{
 		title: '',
 		descr: '',
-		img: 'images/053.png',
-		url: 'https://medium.com/google-earth/python-powers-up-the-rise-of-the-python-api-for-earth-engine-056741eb1b75'
+		img: 'images/068.png',
+		url: 'https://youtu.be/N9ylhHSFh-4?si=XPpqOcpywUaKZuFj'
 	},
 	{
 		title: '',
@@ -46,6 +112,12 @@ var projects = [
 		descr: '',
 		img: 'images/050.png',
 		url: 'https://medium.com/google-earth/charts-as-easy-as-what-where-print-f36b3f9bce89'
+	},
+	{
+		title: '',
+		descr: '',
+		img: 'images/065.png',
+		url: 'https://youtu.be/CKKa9-zU51Q?si=kVQ06qJCdEPiAs8_'
 	},
 	{
 		title: '',
