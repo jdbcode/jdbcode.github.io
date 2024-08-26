@@ -1,5 +1,10 @@
 var projects = [
-
+	{
+		title: '',
+		descr: '',
+		img: 'images/069.png',
+		url: 'https://www.youtube.com/watch?v=tH1Dr0iHSxE'
+	},
 	{
 		title: '',
 		descr: '',
